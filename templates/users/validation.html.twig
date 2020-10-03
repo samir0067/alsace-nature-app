@@ -1,0 +1,109 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Validation{% endblock %}
+
+{% block body %}
+    <!-- Menu Head Table-->
+    <div class="headContent">
+        <div class="row">
+            <h3>Validation des demandes d'autorisation</h3>
+        </div>
+    </div>
+    <!-- Menu Head Table-->
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <!-- Table with panel -->
+    <div class="tableEvent">
+        <table class="table table-striped">
+            <thead>
+            <tr class="headTable">
+                <th>Nom complet</th>
+                <th>Structure</th>
+                <th>Critère de demande</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TERRITORY') %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if users is not empty %}
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.user.firstname ~ ' ' ~ user.user.lastname }}</td>
+                                <td>{{ user.structure.completeName }}</td>
+                                <td>{{ user.authorization.name }}</td>
+                                <td><a href="{{ path('users_accept',{'id': user.id}) }}"><button class="btn btn-outline-success">Accepter</button></a>
+                                    <a href="{{ path('users_refus',{'id': user.id}) }}"><button class="btn btn-outline-danger">Refuser</button></a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="4">Aucune demande en cours</td></tr>
+                    {% endif %}
+                {% elseif is_granted('ROLE_TERRITORY') %}
+
+{#                    Tableau des departements de l'utilisateur             #}
+                    {% set userAreaAuth =[] %}
+                    {% for userArea in app.user.area %}
+                        {% set userAreaAuth = userAreaAuth|merge({(loop.index0): userArea.interventionArea}) %}
+                    {% endfor %}
+
+{#                      Liste des demandes qui concerne le departement de l'utilisateur             #}
+                    {% if users is not empty %}
+                        {% for demande in users %}
+                            {% for numDepartementDemande in demande.structure.interventionArea %}
+                                {% if numDepartementDemande.interventionArea in userAreaAuth %}
+                                    <tr>
+                                        <td>{{ demande.user.firstname ~ ' ' ~ demande.user.lastname }}</td>
+                                        <td>{{ demande.structure.completeName }}</td>
+                                        <td>{{ demande.authorization.name }}</td>
+                                        <td><a href="{{ path('users_accept',{'id': demande.id}) }}"><button class="btn btn-outline-success">Accepter</button></a>
+                                            <a href="{{ path('users_refus',{'id': demande.id}) }}"><button class="btn btn-outline-danger">Refuser</button></a></td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="4">Aucune demande en cours</td></tr>
+                    {% endif %}
+                {% endif %}
+
+            {% elseif is_granted('ROLE_ORGA') %}
+                {% set userStructureId = [] %}
+                {% for test in app.user.staffStructures %}
+                    {% set userStructureId = userStructureId|merge({(loop.index0): test.id}) %}
+                {% endfor %}
+
+                {% if users is not empty %}
+
+                    {% for user in users %}
+                        {% if user.authorization.name == 'Intervenant' and user.structure.id in userStructureId %}
+                        <tr>
+                            <td>{{ user.user.firstname ~ ' ' ~ user.user.lastname }}</td>
+                            <td>{{ user.structure.completeName }}</td>
+                            <td>{{ user.authorization.name }}</td>
+                            <td><a href="{{ path('users_accept',{'id': user.id}) }}"><button class="btn btn-outline-success">Accepter</button></a>
+                                <a href="{{ path('users_refus',{'id': user.id}) }}"><button class="btn btn-outline-danger">Refuser</button></a></td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="4">Aucune demande en cours</td></tr>
+                {% endif %}
+            {% endif %}
+            </tbody>
+            <!--Table body-->
+        </table>
+    </div>
+    <!-- Table with panel -->
+{% endblock %}
+{% block javascripts %}
+    <script>
+        sessionStorage.setItem('active','validation');
+    </script>
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,75 @@
+.bodylogin {
+    background-color: whitesmoke !important;
+}
+
+.connecter {
+    color: black;
+    margin: 1vh 80vh 5vh 80vh;
+}
+
+.logologin {
+    width: 11vh;
+    margin: 4vh 10vh 10vh 35vh;
+}
+
+.titrelogin {
+    margin: 1vh 1vh 5vh 1vh;
+    text-align: center;
+}
+
+.inscrirelogin {
+    margin: 1vh;
+    text-align: center;
+}
+
+.inscrirehover {
+    text-decoration: none !important;
+    color: #83B2AD;
+}
+
+
+.inscrirehover:hover {
+    text-decoration: none !important;
+    color: #67ab79 !important;
+}
+
+.loginborder {
+    border: solid 2px #a6a6a6;
+    border-radius: 2vh;
+}
+
+.loginmail {
+    margin: 4vh;
+}
+
+.mdplogin {
+    margin: 4vh;
+}
+
+
+.remember {
+    margin-left: 4vh;
+}
+
+.buttonlogin {
+    margin-left: 4vh;
+    margin-bottom: 5vh;
+    margin-top: 3vh;
+    color: whitesmoke;
+}
+
+.btnlogin {
+    background-color: #83B2AD !important;
+    border: none!important;
+}
+
+.btnlogin:hover {
+    background-color: #67ab79 !important;
+}
+
+.etoile {
+    margin: 0.5vh 80vh 0.5vh 80vh;
+    font-size: x-small;
+}
+
+

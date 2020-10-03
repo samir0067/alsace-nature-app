@@ -1,0 +1,416 @@
+/*######### Provisoir ##########*/
+.formStruc {
+    color: #000000;
+}
+
+/*######### Général ##########*/
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+ul {
+    list-style: none;
+}
+
+.front_all {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#map {
+    z-index: 0;
+    height: auto;
+    width: 78vw!important;
+}
+
+/*######### Menu page carte et page liste ##########*/
+.front_menu {
+    z-index: 1;
+    position: absolute;
+    max-height: 71px;
+}
+
+.btnMenuCarte {
+    background-color: #7da33d !important;
+}
+.btnMenuListe {
+    background-color: #4E6626 !important;
+
+}
+.btnMenuListe,
+.btnMenuCarte {
+    width: 16.4vw;
+    height: 72px;
+    border-radius: 0!important;
+    font-size: 1.2vw!important;
+    font-weight: bolder!important;
+    color: rgba(234, 235, 222, 1)!important;
+}
+.btnMenuCarte img,
+.btnMenuListe img {
+    width: 2.5vw;
+}
+
+/*######### fin Menu page carte et page liste ##########*/
+/*######### menu filtre liste ##########*/
+.front_filter {
+    z-index: 1;
+    width: 21vw;
+    position: relative;
+}
+
+.icon {
+    width: 3vw;
+    margin-right: 1vw;
+}
+
+.iconCat {
+    width: 1.3vw;
+    margin-right: 0.7vw;
+}
+.iconArrow {
+    width: 0.7vw;
+}
+
+.iconArrow {
+    filter: invert(100%);
+    margin-right: 0.5vw;
+}
+
+.filterNav {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.list-filter {
+    width: 20vw;
+}
+
+.filterBtnTop,
+.filterBtnTopBottom {
+    padding: 0.75rem 1.25rem;
+    background-color: #5f827e;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 1.4vw;
+    height: 72px;
+}
+
+.filterBtnTop:hover {
+    background-color: #94b1ae;
+}
+
+.icons {
+    width: 1.4vw;
+    margin-right: 1vw;
+}
+
+.filterBtnA {
+    background-color: rgb(95, 88, 78) !important;
+    height: 62px;
+}
+.filterBtnA a h5 {
+    font-size: 24px;
+    font-weight: normal;
+}
+.filterAccordion .filterDiv {
+    height: 1.1vw!important;
+    padding-left: 0;
+}
+
+.filterDiv a {
+    color: #000000;
+}
+.filterDiv a:hover,
+.filterDiv a:active {
+    color: #4E6626 !important;
+    text-decoration: none;
+}
+
+.btnCheckboxIndex {
+    margin: 0 0 0 -0.5vw;
+}
+
+.card-header{
+    display: inline-flex;
+}
+
+.filterA,
+.filterBtnA a {
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none !important;
+}
+.filterAllUl a:hover,
+.filterBtnA a:hover {
+    color: rgba(255, 255, 255, 1);
+}
+/*######### fin menu filtre  liste ##########*/
+
+/*######### Debut Mise En Page de ce qu'affiche les markers  #########*/
+.gm-style .gm-style-iw-c {
+    padding: 0;
+}
+
+.gm-ui-hover-effect{
+    display:none !important;
+}
+
+.markerInfo {
+    display: flex;
+    align-content: center;
+}
+
+.markerImage {
+    background-color: red;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.markerImage img{
+    margin-top: 2vh;
+    max-width: 2vw;
+    max-height: 2vw;
+}
+
+.markerContent {
+    display: flex;
+    flex-direction: column;
+    flex: 3 1 auto;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+.markerTitle {
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.markerContent p {
+    text-align: justify;
+    font-size: 2vh;
+}
+
+.markerSep {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list{
+    margin-left:5%;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+.listContainer {
+    width:70vw;
+    height: 120vh;
+    overflow: scroll;
+}
+.listContainer::-webkit-scrollbar {
+    display:none;
+}
+
+.colorsCategory {
+    max-width:40px !important;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    background-color: blue;
+}
+.eventCard {
+    min-height: 25vh;
+}
+.eventDate, .structureEventLink {
+    color: #7DA33D;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.eventTitle {
+    font-weight: bold;
+    font-size: 1.3em;
+    color:#333;
+    text-transform: uppercase;
+}
+.structureEventLink:hover {
+    color: #7DA33D;
+}
+.eventInfosBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    align-content: center;
+}
+.firstBottomEvent {
+    margin-top:20px;
+    line-height: 14px;
+}
+.secondBottomEvent {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.secondButton {
+    margin-left: 5px;
+}
+.btn-dark {
+    background-color: #83B2AD !important;
+    border:none !important;
+}
+.iconButton {
+    height:20px;
+    margin-right:10px;
+    padding-bottom: 3px;
+}
+.picto {
+    margin-left: 10px;
+}
+.picto img {
+    height: 15px;
+    margin: 0 3px;
+}
+.alignRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.markerSep>div+div {
+    align-self: center;
+}
+
+.markerBtn {
+    background-color: #7da33d !important;
+    color: white !important;
+}
+
+.newColor {
+    color: #7DA33D;
+}
+/*######### Couleurs de classe pour les cards ##########*/
+.agriculture {
+    background: #CC798E;
+}
+
+.amenagement {
+    background: #8E7C67;
+}
+
+.eau {
+    background: #5AA0B5;
+}
+
+.enjeux {
+    background: #786AA7;
+}
+
+.faune {
+    background: #83A84E;
+}
+
+.sante {
+    background: #D34A4A;
+}
+
+.modal-lg {
+    max-width: 80vw !important;
+}
+
+.modal-lg h3 {
+    font-weight: bolder;
+}
+
+.modalBtn {
+    background: #83B2AD !important;
+    color: white !important;
+}
+
+.modalDate {
+    color: #7DA33D;
+}
+
+.modalTitle {
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.modalTable tr {
+    background: #EAEBDE;
+}
+
+.modalTable td:nth-child(even) {
+    text-align: right;
+}
+
+.modalTable tr:nth-child(even){
+    background: #BBC982;
+}
+
+.tableImportant {
+    background: #7DA33D;
+}
+
+.modalImage {
+    background-position: center;
+}
+
+.past, .past tr {
+    background-color: lightgrey !important;
+}
+
+.past a, .past p {
+    color: black;
+}
+
+@media only screen and (max-width: 991px) {
+
+    .front_all {
+        flex-direction: column-reverse;
+    }
+
+    #map {
+        top: 7vh;
+        min-height: 100vh !important;
+        width: 100vw !important;
+    }
+
+    .front_menu .btn-group {
+        width: 100vw !important;
+    }
+
+    .btnMenuCarte img, .btnMenuListe img, .filterAllUl img {
+        display: none;
+    }
+
+    .btnMenuCarte, .btnMenuListe {
+        font-size: 5vw !important;
+        padding-left: 2rem !important;
+    }
+
+    .front_filter {
+        top: 9vh;
+    }
+
+    .filterAllUl {
+        display: flex;
+        text-align: center;
+    }
+
+    .filterAllUl li {
+        width: 33vw;
+        border: 1px white solid;
+    }
+
+    .filterBtnTop, .filterBtnTopBottom {
+        text-transform: capitalize;
+        font-size: 2vh;
+        height: 45px;
+    }
+
+    .filterAccordion{
+        display: none;
+    }
+
+    
+}

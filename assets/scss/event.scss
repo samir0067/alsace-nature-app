@@ -1,0 +1,97 @@
+.formEvent > * {
+    padding: 1vw;
+}
+
+.formEventDates {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.formLatLng {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.headTable {
+    border-bottom: 3px solid #5F827E !important;
+}
+
+.firstFilterEvent {
+    display: flex;
+    align-items: center;
+    width: auto;
+    max-width: 32%;
+}
+
+.selectMenuSecond {
+    width: auto;
+    max-width: 30%;
+}
+
+.toFlex {
+    margin:0 !important;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.secondFilterEvent {
+    width: auto;
+    max-width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.table {
+    background-color: #ffffff;
+}
+
+.event-legende {
+    color: #4E6626;
+}
+
+.event-legende a {
+    color: darkred;
+}
+
+.button-flex {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.btn-validate {
+    background:  #83B2AD;
+    color: white;
+}
+
+.logoListItems {
+    width:40px;
+    padding: 10px 5px 0 5px;
+}
+
+/* debut Report */
+.containeReport {
+    background-color: #bfce9e;
+    padding: 2vw;
+}
+
+.containerReportShow {
+    background: #f4f4ed;
+}
+
+.cardReportShow {
+    display: inline-block;
+    text-align: center;
+}
+
+.imgReport {
+    max-width: 100%;
+}
+/* fin Report */

@@ -1,0 +1,14 @@
+<div id="list-example" class="list-group col-3 pt-0">
+    <div id="sorties_nature_logo_01" class="sorties_nature_logo_01">
+        <div class="boxLogo col-3 m-4">
+            <a href=""><img class="logoSortiesNatureBack" src="{{ asset('/build/images/logo-sorties-nature-Bckoff.png') }}"></a>
+        </div>
+    </div>
+    <a class="list-group-item list-group-item-action menuBackOffice" id="event" href="{{ path('evenement_index') }}"><img src="{{ asset('/build/images/icons/event_off.png') }}" class="menuIconBack">Évènements</a>
+    <a class="list-group-item list-group-item-action menuBackOffice" id="structure" href="{{ path('structure_index') }}"><img src="{{ asset('/build/images/icons/structure_on.png') }}" class="menuIconBack">Structures organisatrices</a>
+    <a class="list-group-item list-group-item-action menuBackOffice" id="user" href="{{ path('users_index') }}"><img src="{{ asset('/build/images/icons/utilisateur_off.png') }}" class="menuIconBack">Utilisateurs</a>
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ORGA') or is_granted('ROLE_TERRITORY') %}
+    <a class="list-group-item list-group-item-action menuBackOffice" id="validation" href="{{ path('users_index_validation') }}"><img src="{{ asset('/build/images/icons/utilisateur_off.png') }}" class="menuIconBack">En attente de validation</a>
+    {% endif %}
+    <a class="list-group-item list-group-item-action menuBackOffice" id="tools" href="#list-item-5"><img src="{{ asset('/build/images/icons/reglage_off.png') }}" class="menuIconBack">Réglages</a>
+</div>

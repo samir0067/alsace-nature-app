@@ -1,0 +1,212 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}{{ user.firstName }} {{ user.lastName }}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row mb-4">
+        <h2>Utilisateur : {{ user.firstName }} {{ user.lastName }}</h2>
+        <div class="buttons">
+            {#                 TODO: ces boutons ne fonctionnent pas! #}
+{#            <a href="#"><button class="btn btnCreate">Imprimer</button></a>#}
+{#            <a href="#"><button class="btn btnCreate">Exporter</button></a>#}
+        </div>
+    </div>
+    <!-- Jumbotron User -->
+    <div class="jumbotron text-left blockJumboUserTop">
+        <!-- Row 1 -->
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="card-title">Information de connexion</h4>
+                <ul>
+                    <li>Email : {{ user.mail }}</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                {% if auth != null %}
+                    <h4 class="card-title">Type d’utilisateur</h4>
+                    {% for structure in auth %}
+
+                        {% if structure.structure != null %}
+                        <p>{{ structure.authorization.name }}
+                            pour la structure {{ structure.structure.completeName }}</p>
+                            {% else %}
+                            <p>{{ structure.authorization.name }} {{ structure.interventionArea.interventionArea }}</p>
+                        {% endif %}
+                    {% endfor %}
+                    {% elseif user.roles and user.roles.0 == 'ROLE_ADMIN' %}
+                        <h4 class="card-title">Type d’utilisateur</h4>
+                        <p>Super Admin</p>
+                {% endif %}
+
+            </div>
+        </div>
+        <!-- Row 2 -->
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="card-title">Information de contact</h4>
+                <ul>
+                    <li>Nom : {{ user.lastName }}.</li>
+                    <li>Prénom :  {{ user.firstName }}.</li>
+                    <li>Adresse : {{ user.address }}.</li>
+                    <li>Code postal : {{ user.zipCode }}.</li>
+                    <li>Commune : {{ user.city }}.</li>
+                    <li>Téléphone : {{ user.phone }}.</li>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                {% if auth != null %}
+                   {% for structure in auth %}
+                       {% if structure.structure != null %}
+                <h4 class="card-title">Structure {{ structure.structure.completeName }}</h4>
+                           <p>Intervention de l'utilisateur : </p>
+                <ul>
+                    {% for event in events %}
+                        {% if user.mail == event.organisatorMail %}
+                            <a href="{{ path('') }}"><li>{{ event.title }}</li></a>
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+                       {% endif %}
+                    {% endfor %}
+                {% elseif user.roles and user.roles.0 == 'ROLE_ADMIN' %}
+                    <h4 class="card-title">Informations Super Admin </h4>
+                    <p>Un Super Admin peut voir toutes les informations du site.</p>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Fin Jumbotron User -->
+    <!-- Debut Jumbotron Accès  -->
+    {% if app.user.roles.0 == 'ROLE_ADMIN' or app.user.roles.0 == 'ROLE_TERRITORY' %}
+    <div class="jumbotron text-left blockJumboUserButtom">
+        <!-- row title -->
+        <div class="row mb-4">
+            <h3>Modifier les droits d’accès de l’utilisateur</h3>
+        </div>
+        <!-- row title -->
+
+        <div class="row mb-4 mt-4 CheckAnim" >
+            <h4>Intervenant  Non <input type="checkbox" name="" id="orga" onclick="myFunction()"> Oui</h4>
+        </div>
+        <!-- Row 1 -->
+        <div class="row hidden" id="orgaHide" >
+            {{ form_start(formOrga) }}
+            <div class="col-6">
+                <h5 class="card-title col-12">{{ form_row(formOrga.authorization) }}</h5>
+            </div>
+            <div class="col-6">
+                <h5 class="card-title col-12">{{ form_row(formOrga.structure) }}</h5>
+            </div>
+            <button class="btn btnCreate">{{ button_label|default('Enregistrer') }}</button>
+            {{ form_end(formOrga) }}
+        </div>
+
+
+
+
+        <!-- Row 2 -->
+        <div class="row mb-4 mt-4 CheckAnim" >
+            <h4>Administrateur structure  Non <input type="checkbox" name="" id="admStr" onclick="myFunction()"> Oui</h4>
+        </div>
+
+        <div class="row hidden" id="admStrHide">
+            {{ form_start(formAdmStr) }}
+            <div class="col-6">
+                <h5 class="card-title col-12">{{ form_row(formAdmStr.authorization) }}</h5>
+            </div>
+            <div class="col-6">
+                <h5 class="card-title col-12">{{ form_row(formAdmStr.structure) }}</h5>
+            </div>
+            <button class="btn btnCreate ">{{ button_label|default('Enregistrer') }}</button>
+            {{ form_end(formAdmStr) }}
+        </div>
+
+
+        <!-- Row 3 -->
+        <div class="row mb-4 mt-4 CheckAnim">
+            <h4>Administrateur territorial  Non <input type="checkbox" name="" id="admTerr" onclick="myFunction()"> Oui</h4>
+        </div>
+        <div class="row  hidden" id="admTerrHide">
+            {{ form_start(formAdmTerr) }}
+            <div class="col-6">
+                <h5 class="card-title col-12">{{ form_row(formAdmTerr.authorization) }}</h5>
+            </div>
+            <div class="col-6">
+                <h5 class="card-title col-12">{{ form_row(formAdmTerr.interventionArea) }}</h5>
+            </div>
+            <button class="btn btnCreate ">{{ button_label|default('Enregistrer') }}</button>
+            {{ form_end(formAdmTerr) }}
+        </div>
+        {% endif %}
+        {% if app.user.roles.0 == 'ROLE_ADMIN'%}
+        <!-- Row 4 -->
+        <div class="row mb-4 mt-4 CheckAnim">
+            <h4>Super administrateur Non <input type="checkbox" name="" id="admSpr" onclick="myFunction()"> Oui</h4>
+        </div>
+        <div class="row hidden" id="admSprHide">
+            {{ form_start(formSprAdm) }}
+            <div class="col-6">
+                <h5 class="card-title col-12">{{ form_row(formSprAdm.authorization) }}</h5>
+            </div>
+            <button class="btn btnCreate ">{{ button_label|default('Enregistrer') }}</button>
+            {{ form_end(formSprAdm) }}
+        </div>
+    </div>
+    {% endif %}
+    <!-- Fin Jumbotron Accès  -->
+    <div class="row">
+        <a href="{{ path('users_index') }}">
+            <button type="button" class="btn btn-success">Retour</button>
+        </a>
+        <a href="{{ path('users_edit', {id:user.id}) }}">
+            <button class="btn btn-warning ml-2">Modifier</button>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
+{% block addJavascripts %}
+    <script>
+
+        function myFunction() {
+            var orga = document.getElementById('orga');
+            var orgaHide = document.getElementById('orgaHide');
+            var admStr = document.getElementById('admStr');
+            var admStrHide = document.getElementById('admStrHide');
+            var admTerr = document.getElementById('admTerr');
+            var admTerrHide = document.getElementById('admTerrHide');
+            var admSpr = document.getElementById('admSpr');
+            var admSprHide = document.getElementById('admSprHide');
+
+                if (orga.checked == true) {
+                    orgaHide.style.display = 'block';
+                } else {
+                    orgaHide.style.display = "none";
+                }
+                if (admTerr.checked == true) {
+                    admTerrHide.style.display = 'block';
+                } else {
+                    admTerrHide.style.display = "none";
+                }
+                if (admStr.checked == true) {
+                    admStrHide.style.display = 'block';
+                } else {
+                    admStrHide.style.display = "none";
+                }
+                if (admSpr.checked == true) {
+                    admSprHide.style.display = 'block';
+                } else {
+                    admSprHide.style.display = "none";
+                }
+
+        }
+
+    </script>
+{% endblock %}

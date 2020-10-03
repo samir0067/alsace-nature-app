@@ -1,0 +1,10 @@
+<div class="formEvent col-12">
+{{ form_start(form) }}
+{{ form_widget(form) }}
+    <div class="button-flex">
+        <button class="btn btn-validate btn-lg">{{ button_label|default('Soumettre') }}</button>
+        <a href="{{ path('evenement_index') }}" class="btn btn-danger btn-lg">Annuler</a>
+    </div>
+{{ form_end(form) }}
+
+</div>

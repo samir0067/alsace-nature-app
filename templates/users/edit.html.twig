@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.firstName }} {{ user.lastName }}{% endblock %}
+
+{% block body %}
+    <h2>Modifier votre compte</h2>
+    <div class="container container-back mt-5">
+        {{ include ('users/_formUsers.html.twig', {formUsers: formUsers, button_label: 'Modifier'}) }}
+    </div>
+{% endblock %}

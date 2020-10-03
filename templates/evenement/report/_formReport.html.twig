@@ -1,0 +1,48 @@
+<div class="formReport col-12">
+    {{ form_start(formReport) }}
+
+    <div class="formBasicFields col-12">
+        <h2>Bilan de retour de l'évènement </h2>
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_row(formReport.reportDescrip)}}
+            </div>
+        </div>
+        <div class="form-group row align-items-end">
+            <div class="col-md-3">
+                {{ form_label(formReport.reportMember) }}
+            </div>
+            <div class="col-md-1">
+                {{ form_widget(formReport.reportMember) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_label(formReport.reportTimeSpent)}}
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(formReport.reportTimeSpent)}}
+            </div>
+        </div>
+        <div class="event-legende">
+            <p>
+                Le "temps consacré" correspond au temps de préparation + réalisation + trajet pour cet évènement. <br>
+                Il permet à vos structures de rattachement de quantifier le bénévolat et de le valoriser auprès de ses
+                partenaires d'une part, et de renseigner ses bilans financiers annuels
+                <span>(obligatoire depuis le 01/01/2020)</span> d'autre part.
+            </p>
+        </div>
+        <div class="form-group row align-items-end">
+            <div class="col-md-1">
+                {{ form_label(formReport.imageFile) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(formReport.imageFile) }}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="button-flex">
+        <button class="btn btnCreate mr-2">{{ button_label|default('Soumettre') }}</button>
+    </div>
+    {{ form_end(formReport) }}
+</div>

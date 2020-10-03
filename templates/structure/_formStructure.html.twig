@@ -1,0 +1,91 @@
+
+{{ form_start(formStructure) }}
+    <div class="row align-items-end bt-3">
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.structureType) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.interventionArea) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.completeName) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-7">{{ form_row(formStructure.usualName) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-md-3">
+            <div class="col-md-12">{{ form_row(formStructure.imageFile) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12"><p>Poids maximum autorisé 1Mo</p></div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-md-12">
+            <div class="col-md-12">{{ form_row(formStructure.description) }}</div>
+        </div>
+    </div>
+
+    <h3>Responsable légal de la structure</h3>
+    <div class="row align-items-end">
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.legalRpLastName) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.legalRpFirstName) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.legalRepresentRole) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.legalRepresentMail) }}</div>
+        </div>
+    </div>
+    <h3>Coordonnées de structure</h3>
+    <div class="row align-items-end">
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.officeMail) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.website) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-md-12">
+            <div class="col-md-12">{{ form_row(formStructure.officeAddress, {'id': 'form-address'}) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-md-6">
+            <div class="col-md-5">{{ form_row(formStructure.postalCode, {'id': 'form-zipcode'} ) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.city, {'id': 'form-city'}) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-md-6">
+            <div class="col-md-7">{{ form_row(formStructure.officePhone) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.territoryOffice, {'id': 'form-departement'}) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formStructure.externalPaymentLink) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end mt-5">
+        <div class="col-md-12">
+            <a href="{{ path('structure_index') }}" class="btn btnCancel ml-3 mr-2">Annuler</a>
+            <button class="btn btnCreate ">{{ button_label|default('Enregistrer') }}</button>
+            {{ form_end(formStructure) }}
+        </div>
+    </div>

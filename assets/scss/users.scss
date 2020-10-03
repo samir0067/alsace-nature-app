@@ -1,0 +1,56 @@
+// show.html.twig
+.blockJumboUserTop {
+    background-color: #f6f7f1;
+    padding: 1rem 3rem;
+}
+
+.blockJumboUserButtom {
+    background-color: #bfce9e;
+    padding: 1rem 3rem;
+}
+
+// formulaire user
+.messageFormUsers {
+    text-align: center;
+    font-size: 1.2em;
+    color: #567617;
+}
+
+// checkbox animation
+.CheckAnim h4 input[type="checkbox"]
+{
+    position: relative;
+    width: 36px;
+    height: 18px;
+    -webkit-appearance: none;
+    background: #c6c6c6;
+    outline: none;
+    border-radius: 20px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+    transition: .5s;
+}
+
+.CheckAnim h4 input:checked[type="checkbox"]
+{
+    background: rgba(244, 39, 3, 0.46);
+}
+
+.CheckAnim h4 input[type="checkbox"]:before
+{
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 20px;
+    top: 0;
+    left: 0;
+    background: #3f8730;
+    transform: scale(0.7);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+    transition: .5s;
+}
+
+.CheckAnim h4 input:checked[type="checkbox"]:before
+{
+    left: 18px;
+}

@@ -1,0 +1,38 @@
+@import "~bootstrap/scss/bootstrap";
+@import "vars";
+@import "back";
+@import "footer.css";
+@import "header.css";
+@import "index.css";
+@import "event.scss";
+@import "structure.scss";
+@import "login.css";
+@import "register.css";
+@import "users.scss";
+@import "participation.css";
+@import "sortienature.css";
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #eaebde;
+}
+
+.hidden {
+    display: none;
+}
+
+.toHide {
+    display: none;
+}

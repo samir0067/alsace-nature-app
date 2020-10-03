@@ -1,0 +1,47 @@
+/*##### boutton #####*/
+.btnContactStruc {
+    margin: 0 0 1vw 0;
+    float: right;
+    background-color: $light_green;
+    color: white;
+
+    &:hover {
+        background-color: darken($light_green, 15);
+        color: white;
+        text-decoration: none;
+    }
+}
+
+.btnCancel {
+    background-color: $dark_red;
+    color: white;
+
+    &:hover {
+        background-color: lighten($dark_red, 15);
+        color: white;
+    }
+}
+
+.btnCreate {
+    background-color: $light_sarcelle;
+    color: white;
+
+    &:hover {
+        background-color: darken($light_sarcelle, 15);
+        color: white;
+    }
+}
+
+/*##### fin boutton #####*/
+
+.titleNewEditStruc {
+    margin: 0 0 2.5vw 0;
+    padding: 0;
+}
+
+.blockFormStruc {
+    background-color: #d4ddbf;
+    padding: 3vw;
+    margin: 0 0 3vw 0;
+}
+

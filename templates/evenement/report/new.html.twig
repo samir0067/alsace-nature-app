@@ -1,0 +1,12 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Créer le bilan{% endblock %}
+
+{% block body %}
+    <div class="container containeReport mt-5">
+        {{ include('evenement/report/_formReport.html.twig',
+            {formReport: formReport, button_label: 'Enregistrer le bilan'})
+        }}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,16 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Ajouter un événement{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1>Ajouter des événements via un import de fichier .CSV</h1>
+
+    <div class="container container-back">
+        {{ include('evenement/_formImport.html.twig') }}
+    </div>
+
+{% endblock %}

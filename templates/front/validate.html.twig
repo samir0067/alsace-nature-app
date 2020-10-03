@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Participer à l'événement
+{% endblock %}
+
+{% block body %}
+    {% if eventDetails.cost is same as (0) %}
+        <h1 class="offset-1 mt-5">Confirmation</h1>
+        <div class="offset-1 col-10 mt-2 mb-5 participateContainer">
+            <div class="offset-1 col-10 mt-5 p-4 validateRow">
+                <p> Félicitations, votre inscription a été enregistrée pour cet évènement ! </p>
+                <p> Il aura lieu le {{ eventDetails.dateStart|date('d-m-Y') }} à {{ eventDetails.dateStart|date('h:g:i') }}
+                <p> Vous pouvez le retrouver dans vos participations !</p>
+            </div>
+        </div>
+
+    {% else %}
+        <h1 class="offset-1 mt-5">Finalisation</h1>
+        <div class="offset-1 col-10 mt-2 mb-5 participateContainer">
+            <div class="offset-1 col-10 mt-5 p-4 validateRow">
+                <p> Félicitations pour votre pré-inscription à {{ eventDetails.title }}</p>
+                <p> Il aura lieu le {{ eventDetails.dateStart|date('d-m-Y') }} à {{ eventDetails.dateStart|date('h:g:i') }}<p>
+                <p> Vous pouvez le retrouver dans vos participations !</p>
+
+                {% if eventDetails.structure.externalPaymentLink  %}
+                <p>Afin de finaliser celle-ci, vous pouvez effectuer le paiement en ligne
+                    sur notre plateforme sécurisée, ou bien, prendre contact avec <strong>{{ eventDetails.structure.completeName}}</strong> par téléphone: 0{{ eventDetails.structure.officePhone}}
+                    pour un règlement en espèces ou par chèque. </p>
+                <a class="button btn-lg offset-5 participateBtn" target="_blank" href="{{ eventDetails.structure.externalPaymentLink }}">Payer</a>
+
+                {% else %}
+                    <p>Afin de finaliser celle-ci, la structure n'ayant pas de lien de paiement en ligne, veuillez prendre contact avec {{ eventDetails.structure.completeName}}, par téléphone: {{ eventDetails.structure.officePhone}}
+                        pour un règlement en espèces ou par chèque . </p>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    <a class="button btn-lg mb-5 offset-5 text-center participateBtn" href="{{ path('index_map') }}">Retourner à l'accueil</a>
+
+
+{% endblock %}

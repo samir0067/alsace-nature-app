@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,300&display=swap" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+        {% include "/layout/header.html.twig" %}
+        {% for category, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% block body %}{% endblock %}
+        {% include "/layout/footer.html.twig" %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <script>
+                $(document).ready(function () {
+                    $('select').select2();
+                });
+            </script>
+            <script>
+
+                {% if app.user %}
+                let userID = {{ app.user.id }};
+                {% else %}
+                let userID = null;
+                {% endif %}
+                function ajaxModale(id){
+                    let myInit = {
+                        method: 'GET',
+                        mode: 'same-origin',
+                        cache: 'default'
+                    };
+
+                    fetch('ajax/'+id, myInit).then(response => response.json())
+                        .then(json => {
+                            console.log(json);
+                            let register= "";
+                            let cost = "gratuit";
+                            let max = "/";
+                            let participate = false;
+                            let favoris = false;
+                            let participants = json.participant;
+                            let fav = json.userFavorites;
+
+                            for (let i = 0; i < participants.length; i++) {
+                                if (participants[i].id === userID) {
+                                    participate = true;
+                                }
+                            }
+                            for (let i = 0; i < fav.length; i++) {
+                                if (fav[i].id === userID) {
+                                    favoris = true;
+                                    console.log(fav[i].id);
+                                }
+                            }
+                            if (participate === false) {
+                                participate = "<div class=\"col-3 offset-5\"><a href='/participate/"+json.id+"'> <button class=\"button btn modalBtn\">" +
+                                    "<img class='iconButton' src='build/images/icons/participation.png'> Participer</button></a></div>\n";
+                            } else {
+                                participate = "<div class=\"col-3 offset-5\"><a href='/removeParticipation/"+json.id+"'> <button class=\"button btn modalBtn\">" +
+                                    "<img class='iconButton' src='build/images/icons/participation.png'> Annuler </button></a></div>\n";
+                            }
+                            if (favoris === false ) {
+                                favoris = "<div class='col-3'><a href='/addFavorite/"+json.id+"'><button class='button btn modalBtn'>" +
+                                    "<img class='iconButton' src='build/images/icons/star.png'> " +
+                                    "Intéressé</button></a></div>";
+                            } else {
+                                favoris = "<div class='col-4'><a href='/removeFavorite/"+json.id+"'><button class='button btn modalBtn'>" +
+                                    "<img class='iconButton' src='build/images/icons/star.png'> " +
+                                    " Retirer des favoris </button></a></div>";
+                            }
+                            let date = new Date(json.dateStart.timestamp * 1000);
+                            let eventStop = new Date(json.dateStop.timestamp * 1000);
+                            let today = new Date();
+                            if (eventStop < today) {
+                                var past = "past";
+                                favoris = "";
+                                participate = "";
+                            }
+                            let dateStart = date.toLocaleDateString('en-GB');
+                            let dateStop = eventStop.toLocaleDateString('en-GB');
+                            if (json.registerRequired === false) {
+                                register = "non";
+                            } else {
+                                register = "oui"
+                            }
+                            if (json.cost === '1' ) {
+                                let cost = "Adulte: " +initialPriceAdult + "€ || Enfant: " +initialPriceChild+"€ || Réduit: " +reduction+"€";
+                            }
+                            if (json.maxParticipants == null){
+                                json.maxParticipants = max;
+                            }
+
+                            let category = json.category[0].name.toLowerCase();
+                            let theme = json.theme[0].name.toLowerCase();
+                            let themes = theme.replace("é","e");
+                            $("#modalContent").html("<div class=\"modal-content "+past+"\">\n" +
+                                "                    <div class=\"modal-header\">\n" +
+                                "                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n" +
+                                "                            <span aria-hidden=\"true\">&times;</span>\n" +
+                                "                        </button>\n" +
+                                "                    </div>\n" +
+                                "                    <div class=\"container-fluid\">\n" +
+                                "                        <div class=\"row\">\n" +
+                                "                            <div class=\"col-md-2 "+ themes +"\"> <img class=\"mt-2 icons\" src=\"build/images/icons/"+category+".png\"> </div>\n" +
+                                "                            <div class=\"col-md-4 modalImage\" style=\"background-image:url('/uploads/files/event/"+json.illustration+"')\"></div>\n" +
+                                "                            <div class=\"col-md-6 p-6\">\n" +
+                                "                                <div class=\"row\">\n" +
+                                "                                    <div class=\"col-10 m-3 modalDate\"><h3>"+dateStart+"</h3></div>\n"+
+                                "                                </div>\n" +
+                                "                                <div class=\"row\">\n" +
+                                "                                    <div class=\"col-10 m-3 modalTitle\">"+json.title+"</div>\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"row\">"+participate+""+favoris+"\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>\n" +
+                                "                        <div class=\"row\">\n" +
+                                "                            <div class=\"col-md-6 p-3\">\n" +
+                                "                                <div class=\"row\">\n" +
+                                "                                    <div class=\"col-10\"><h3>Descriptif</h3></div>\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"row\">\n" +
+                                "                                    <div class=\"col-10\"> "+ json.description +"</div>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"col-md-5 \">\n" +
+                                "                                <div class=\"row\">\n" +
+                                "                                    <div class=\"col-12\">\n" +
+                                "                                    <h3>Infos utiles</h3>" +
+                                "                                        <table class=\"table modalTable "+past+"\">\n" +
+                                "                                            <tbody>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td>Horaires:</td>\n" +
+                                "                                                <td>Du "+dateStart +" "+ date.getHours()+"h" + date.getMinutes()+" " +
+                                "                                                au "+ dateStop +" " + eventStop.getHours()+"h" + eventStop.getMinutes()+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td>Département:</td>\n" +
+                                "                                                <td>Mark</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td>Inscription obligatoire:</td>\n" +
+                                "                                                <td>"+ register +"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td>Tarif: </td>\n" +
+                                "                                                <td>"+ cost +"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td>Type de public</td>\n" +
+                                "                                                <td>"+json.targetAudience+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td>Catégorie</td>\n" +
+                                "                                                <td>"+ json.category[0].name +"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td>Thématique</td>\n" +
+                                "                                                <td>"+ json.theme[0].name +"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td>Accessibilité:</td>\n" +
+                                "                                                <td>"+ json.accessibility+"</td>\n" +
+                                "                                            </tr>\n" +
+
+                                "                                            <tr class=\"tableImportant\">\n" +
+                                "                                                <td>Places restantes</td>\n" +
+                                "                                                <td>"+json.maxParticipants+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            </tbody>\n" +
+                                "                                            <tfoot>\n" +
+                                "                                                <tr>\n" +
+                                "                                                     <td></td>\n" +
+                                "                                                    <td>Contact "+json.organisatorPhoneNum+"" +
+                                "                                                    <br>Mail de l'organisateur " +json.organisatorMail+"</td>\n" +
+                                "                                                </tr>\n" +
+                                "                                            </tfoot>\n" +
+                                "                                        </table>\n" +
+                                "                                    </div>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>\n" +
+                                "                        <div class=\"row\">\n" +
+                                "                            <div class=\"col-10\"><strong>Localisation:</strong> "+ json.location +" "+ json.zipCode +" "+ json.city +" </div>\n" +
+                                "                        </div>\n" +
+                                "                                <div class=\"row\">"+participate+""+favoris+"\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                </div>");
+                        })
+                        .catch(() => console.log('error'));
+                }
+
+
+            </script>
+        {% endblock %}
+    </body>
+</html>

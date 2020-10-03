@@ -1,0 +1,117 @@
+<div class="formEvent col-12">
+{{ form_start(form) }}
+
+    <div class="formBasicFields col-12">
+        <h2>Description</h2>
+        {{ form_row(form.title)}}
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.category) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.theme) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.structure)}}
+                <p class="event-legende">Si votre structure n'est pas dans la liste, vous pouvez la <a href="{{ path('structure_new') }}">proposer</a>.</p>
+            </div>
+            <div class="col">
+                {{ form_row(form.targetAudience) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.description)}}
+                <div class="event-legende">
+                    <p> Votre descriptif doit comporter les éléments suivants, lorsqu’ils sont pertinents :</p>
+                    <ul>
+                        <li>3 à 5 phrases pour susciter l’envie de participer (contexte général, cadre, milieu, etc. que l’on veut faire découvrir)                    </li>
+                        <li>les recommandations pratiques (équipement, pique nique, niveau de difficulté, covoiturage prévu…)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {{ form_row(form.imageFile) }}
+        <h2>Date</h2>
+        <div class="formEventDates col-10">
+            {{ form_row(form.dateStart)}}
+            {{ form_row(form.dateStop)}}
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.location, {'id': 'form-address'})}}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.zipCode, {'id': 'form-zipcode'}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.city, {'id': 'form-city'}) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.region, {'id': 'form-region'}) }}
+            </div>
+        </div>
+        <h2>Détails complémentaires</h2>
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.registerRequired)}}
+            </div>
+            <div class="col-3 hidden" id="form-max">
+                {{ form_row(form.maxParticipants) }}
+            </div>
+            <div class="col-3 hidden" id="form-maxAdult">
+                {{ form_row(form.numberSubscribAdult) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="col-4">
+                    {{ form_row(form.cost, {'attr': {'class': 'cost_select form-check form-check-inline'}})}}
+                </div>
+            </div>
+            <div class="col-2 hidden" id="priceReduct">
+                {{ form_row(form.reduction) }}
+            </div>
+            <div class="col-3 hidden" id="reductCondition">
+                {{ form_row(form.reductionCondition) }}
+            </div>
+            <div class="col-2 hidden" id="priceAdult">
+                {{ form_row(form.initialPriceAdult) }}
+            </div>
+            <div class="col-2 hidden" id="priceChild">
+                {{ form_row(form.initialPriceChild) }}
+            </div>
+        </div>
+        {{ form_row(form.accessibility) }}
+
+        <h4>Organisateur</h4>
+        <div class="row">
+            <div class="col">
+{#                {{ form_row(form.participant)}}#}
+            </div>
+            <div class="col">
+                {{ form_row(form.typeUsers) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.organisatorPhoneNum) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.organisatorMail) }}
+            </div>
+        </div>
+        {{ form_row(form.eventStatus) }}
+    </div>
+
+    <div class="button-flex">
+        <button class="btn btnCreate mr-2">{{ button_label|default('Soumettre') }}</button>
+        <a href="{{ path('evenement_index') }}" class="btn btn-danger ml-3 mr-2">Annuler</a>
+    </div>
+{{ form_end(form) }}
+
+</div>

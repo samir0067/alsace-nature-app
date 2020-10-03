@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion du compte{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="bigregister">
+        <h1 class="titreregister">Modifier votre compte</h1>
+        <button type="submit" class="registersupprimer">Supprimer mon compte</button>
+        <div class="register">
+            <a class="offset-8 button btnannuleregister " href="{{ path("users_authorization", {'id': app.user.id}) }}">Je souhaite devenir intervenant</a>
+
+            <div class="registrationForm compte">
+                {{ form_start(formUsers) }}
+                <p class="connecregister">Information de connexion</p>
+                <div class="registermail"
+                {{ form_row(formUsers.mail) }}
+            </div>
+            <div class="registermdp col-9 row-cols-2">
+                {{ form_row(formUsers.plainPassword) }}
+            </div>
+            <p class="infocontactreg">Information de contact</p>
+            <div class="registername col-12 row-cols-2">
+                <div class="col-6">
+                    {{ form_row(formUsers.firstname) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(formUsers.lastname) }}
+                </div>
+            </div>
+            <div class="registeradress">
+                {{ form_row(formUsers.address) }}
+                <div class="zipregister col-12 row-cols-1">
+                    <div class="col-12 m-1">
+                        {{ form_row(formUsers.zipcode) }}
+                    </div>
+                    <div class="col-12 m1">
+                        {{ form_row(formUsers.city) }}
+                    </div>
+                </div>
+                {{ form_row(formUsers.phone) }}
+                <div class="agreeregister">
+                    <p>Veuillez cocher la case ci-dessous pour continuer</p>
+                    {{ form_row(formUsers.agreeTerms) }}
+                </div>
+            </div>
+
+            <p class="registerint">Vos informations de contact resteront confidentielles
+                , elles sont utiles pour faciliter le traitement de votre inscription
+                auprès de l'intervenant.</p>
+            <div class="buttonregister">
+                <button type="submit" class="btnvalideregister">Annuler</button>
+                <button type="submit" class="btnannuleregister">Valider</button>
+                {{ form_end(formUsers) }}
+            </div>
+            <p class="laley">Conformément à la loi « informatique et libertés » du
+                6 janvier 1978 modifiée en 2004, vous bénéficiez d’un droit d’accès et
+                de rectification aux informations qui vous concernent, que vous pouvez
+                exercer en nous contactant. Vous pouvez également, pour des motifs
+                légitimes, vous opposer au traitement des données vous concernant. Les
+                informations de contact resteront confidentielles, elles sont utiles
+                pour faciliter le traitement de l’inscription de la structure sur la
+                plateforme.</p>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

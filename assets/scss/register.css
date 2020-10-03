@@ -1,0 +1,126 @@
+.bigregister {
+    background-color: #EAEBDE;
+}
+
+.register {
+    margin: 15vh 20vh 15vh 20vh;
+    background-color: #fffefa;
+    padding: 9vh;
+    border-radius: 1vh;
+}
+
+.titreregister {
+    margin: 2vh 0.1vh -8vh 20vh;
+    padding-top: 10vh;
+    font-size: 3vh;
+}
+
+.registersupprimer {
+    float: right;
+    border: solid 1px #8A2822;
+    background-color: #8A2822;
+    color: whitesmoke;
+    margin: 5vh 20vh 2vh 51vh;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    padding: 1vh 3vh 1vh 3vh;
+}
+
+.registersupprimer:hover {
+    background-color: #bd2d24;
+}
+
+.connecregister {
+    font-size: 2vh;
+    font-weight: bold;
+}
+
+.registermail {
+    margin: 5vh 90vh -2vh -0.5vh;
+}
+
+.registermdp {
+    display: flex;
+    justify-content: space-between;
+    margin: 4vh 90vh 2vh -1.9vh;
+}
+
+.infocontactreg {
+    font-size: 2vh;
+    font-weight: bold;
+    margin:  2vh 0 2vh 0;
+}
+
+.registername {
+    display: flex;
+    justify-content: space-between;
+    margin: 3vh 70vh -3vh -1.9vh;
+}
+
+.registeradress {
+    margin: 1vh 90vh 5vh -0.5vh;
+}
+
+.zipregister {
+    display: flex;
+    justify-content: space-between;
+    margin: 5vh 90vh 2vh -1.4vh ;
+}
+
+.form-group{
+    margin-right: 5vh;
+}
+
+.col-6 {
+    margin-left: -1.9vh;
+}
+
+.col-9 {
+    max-width: 100%;
+}
+
+.agreeregister {
+    margin-top: 5vh;
+}
+
+.registerint {
+    color: #5F827E;
+}
+
+.buttonregister {
+    margin: 5vh 10vh 0.1vh -5vh;
+}
+
+.btnvalideregister {
+    border: solid 1px #8A2822;
+    background-color: #8A2822;
+    color: whitesmoke;
+    margin: 1vh 5vh 2vh 51vh;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    padding: 1vh 3vh 1vh 3vh;
+}
+
+.btnvalideregister:hover {
+    background-color: #bd2d24;
+}
+
+.btnannuleregister {
+    border: solid 1px #83B2AD;
+    background-color: #83B2AD;
+    color: whitesmoke;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    padding: 1vh 3vh 1vh 3vh;
+}
+
+
+.btnannuleregister:hover {
+    background-color: #67ab79;
+}
+
+
+.laley {
+    margin: 5vh 10vh 0.1vh 0.1vh;
+    font-style: italic;
+}

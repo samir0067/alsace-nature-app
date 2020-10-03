@@ -1,0 +1,246 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Evenement index{% endblock %}
+
+{% block body %}
+
+    <div class="headContent">
+        <div class="row">
+            <h3>Évènements</h3>
+            <div class="buttons">
+                <a href="{{ path('evenement_new') }}"><button class="btn btnCreate">Créer</button></a>
+{#                 TODO: ces boutons ne fonctionnent pas! #}
+{#                <button class="buttonType">Importer</button>#}
+            </div>
+        </div>
+        <div class="row">
+            <p class="filterUnderHead"><span class="activeFilter">Tous ({{ evenements|length }}) </span></p>
+{#                 TODO: ces filtres ne fonctionnent pas! #}
+{#            <p class="filterUnderHead">À venir (4) </p>#}
+{#            <p class="filterUnderHead">Passés (1) </p>#}
+{#            <p class="filterUnderHead">Supprimés (1)</p>#}
+        </div>
+    </div>
+    <div class="row toFlex">
+        <div class="firstFilterEvent">
+            <select class="custom-select selectMenu">
+                <option selected disabled>Actions groupées</option>
+                <option >Dupliquer</option>
+                {% if is_granted('ROLE_ORGA') %}
+                <option>Valider (publier)</option>
+                <option>Refuser la publication</option>
+                {% endif %}
+                <option>Annuler (reste publié)</option>
+                <option>Exporter évènement</option>
+                <option>Exporter participants</option>
+                <option>Supprimer (dépublier)</option>
+            </select>
+            <button class="btn btnCreate">Appliquer</button>
+        </div>
+        <div class="secondFilterEvent">
+            <select class="custom-select selectMenuSecond">
+                <option selected>Toutes les dates</option>
+                <option >A venir</option>
+                <option>Passée</option>
+            </select>
+            <select class="custom-select selectMenuSecond">
+                <option selected disabled>Catégories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.name }}">{{ cat.name }}</option>
+                    {% endfor %}
+            </select>
+            <select class="custom-select selectMenuSecond">
+                <option selected disabled>Zones géographique</option>
+                <option value="67">Bas-Rhin</option>
+                <option value="68">Haut-Rhin</option>
+                <option value="88">Vosges</option>
+                <option value="54">Meurthe-et-Moselle</option>
+                <option value="57">Moselle</option>
+                <option value="55">Meuse</option>
+                <option value="52">Haute-Marne</option>
+                <option value="08">Ardennes</option>
+                <option value="51">Marne</option>
+                <option value="10">Aube</option>
+            </select>
+            <button class="btn btnCreate">Filtrer</button>
+        </div>
+    </div>
+    <div class="tableEvent">
+        <table class="table table-striped">
+            <thead>
+                <tr class="headTable">
+                    <th><input type="checkbox" disabled></th>
+                    <th>Titre</th>
+                    <th>Participants</th>
+                    <th>Structure</th>
+                    <th>DateStart</th>
+{#                 TODO: Statut non fonctionnel! #}
+                    <th>Statut</th>
+                    <th>Bilan</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if is_granted('ROLE_ADMIN') %}
+                {% for evenement in evenements %}
+
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <a href="{{ path('evenement_show', {id:evenement.id}) }}">
+                            {{ evenement.title }}</a>
+                        </td>
+                        <td><a href="{{ path('evenement_participants', {'id' : evenement.id}) }}">{% if evenement.nbrParticipants is not null %}{{ evenement.nbrParticipants }} {% else %} 0 {% endif %} inscrit(s) </a></td>
+                        <td>{% if evenement.structure.usualName is not null %}{{ evenement.structure.usualName }}
+                            {% else %} {{ evenement.structure.completeName }} {% endif %}</td>
+                        <td>{{ evenement.dateStart ? evenement.dateStart|date('d/m/Y') : '' }}</td>
+                        <td>{{ evenement.eventStatus }}</td>
+                        <td>
+                            {% if date() > date(evenement.dateStop)%}
+                                {% if evenement.report.id is defined %}
+                                    <a href="{{ path('evenement_report_show', {evenement:evenement.id, id:evenement.report.id}) }}">
+                                        <img class="icons" alt="bilanValide" src="{{ asset('build/images/icons/bilan-vert.png') }}">
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('evenement_report_new', {evenement:evenement.id}) }}">
+                                        <img class="icons" alt="bilanARemplir" src="{{ asset('/build/images/icons/bilan-rouge.png') }}">
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <img class="icons" alt="bilan" src="{{ asset('/build/images/icons/bilan.png') }}">
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                {% else %}
+                    <tr>
+                        <td colspan="20">Il n'y a pas d'événements</td>
+                    </tr>
+                {% endfor %}
+            {% elseif is_granted('ROLE_TERRITORY') %}
+                {% for evenement in evenements %}
+                    {% if evenement.structure.interventionArea.values != null %}
+                            {% if evenement.structure.id in idStruc %}
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <a href="{{ path('evenement_show', {id:evenement.id}) }}">
+                                            {{ evenement.title }}</a>
+                                    </td>
+                                    <td>{{ evenement.nbrParticipants }}  inscrits</td>
+                                    <td>{% if evenement.structure.usualName is not null %}{{ evenement.structure.usualName }}
+                                {% else %} {{ evenement.structure.completeName }} {% endif %}</td>
+                                    <td>{{ evenement.dateStart ? evenement.dateStart|date('Y/m/d') : '' }}</td>
+                                    <td>{{ evenement.eventStatus }}</td>
+                                    <td>
+                                        {% if date() > date(evenement.dateStop)%}
+                                            {% if evenement.report.id is defined %}
+                                                <a href="{{ path('evenement_report_show', {evenement:evenement.id, id:evenement.report.id}) }}">
+                                                    <img class="icons" alt="bilanValide" src="{{ asset('/build/images/icons/bilan-vert.png') }}">
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('evenement_report_new', {evenement:evenement.id}) }}">
+                                                    <img class="icons" alt="bilanARemplir" src="{{ asset('/build/images/icons/bilan-rouge.png') }}">
+                                                </a>
+                                            {% endif %}
+                                        {% else %}
+                                            <img class="icons" alt="bilan" src="{{ asset('/build/images/icons/bilan.png') }}">
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="20">Il n'y a pas d'événements</td>
+                    </tr>
+                {% endfor %}
+            {% elseif is_granted('ROLE_ORGA') %}
+                {% set userStructureId = [] %}
+                {% for test in app.user.staffStructures %}
+                    {% set userStructureId = userStructureId|merge({(loop.index0): test.id}) %}
+                {% endfor %}
+                {% for evenement in evenements %}
+                    {% if evenement.structure.id in userStructureId %}
+                        {% for staff in evenement.structure.staff %}
+                            {% if staff.id == app.user.id %}
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <a href="{{ path('evenement_show', {id:evenement.id}) }}">
+                                            {{ evenement.title }}</a>
+                                    </td>
+                                    <td>{{ evenement.nbrParticipants }}  inscrits</td>
+                                    <td>{% if evenement.structure.usualName is not null %}{{ evenement.structure.usualName }}
+                                        {% else %} {{ evenement.structure.completeName }} {% endif %}</td>
+                                    <td>{{ evenement.dateStart ? evenement.dateStart|date('Y/m/d') : '' }}</td>
+                                    <td>{{ evenement.eventStatus }}</td>
+                                    <td>
+                                        {% if date() > date(evenement.dateStop)%}
+                                            {% if evenement.report.id is defined %}
+                                                <a href="{{ path('evenement_report_show', {evenement:evenement.id, id:evenement.report.id}) }}">
+                                                    <img class="icons" alt="bilanValide" src="{{ asset('/build/images/icons/bilan-vert.png') }}">
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('evenement_report_new', {evenement:evenement.id}) }}">
+                                                    <img class="icons" alt="bilanARemplir" src="{{ asset('/build/images/icons/bilan-rouge.png') }}">
+                                                </a>
+                                            {% endif %}
+                                        {% else %}
+                                            <img class="icons" alt="bilan" src="{{ asset('/build/images/icons/bilan.png') }}">
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="20">Il n'y a pas d'événements</td>
+                    </tr>
+                {% endfor %}
+            {% elseif is_granted('ROLE_EVENT') %}
+                {% for evenement in evenements %}
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>
+                                    <a href="{{ path('evenement_show', {id:evenement.id}) }}">
+                                        {{ evenement.title }}</a>
+                                </td>
+                                <td>{{ evenement.nbrParticipants }}  inscrits</td>
+                                <td>{% if evenement.structure.usualName is not null %}{{ evenement.structure.usualName }}
+                                    {% else %} {{ evenement.structure.completeName }} {% endif %}</td>
+                                <td>{{ evenement.dateStart ? evenement.dateStart|date('Y/m/d') : '' }}</td>
+                                <td>{{ evenement.eventStatus }}</td>
+                                <td>
+                                    {% if date() > date(evenement.dateStop)%}
+                                        {% if evenement.report.id is defined %}
+                                            <a href="{{ path('evenement_report_show', {evenement:evenement.id, id:evenement.report.id}) }}">
+                                                <img class="icons" alt="bilanValide" src="{{ asset('/build/images/icons/bilan-vert.png') }}">
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ path('evenement_report_new', {evenement:evenement.id}) }}">
+                                                <img class="icons" alt="bilanARemplir" src="{{ asset('/build/images/icons/bilan-rouge.png') }}">
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <img class="icons" alt="bilan" src="{{ asset('/build/images/icons/bilan.png') }}">
+                                    {% endif %}
+                                </td>
+                            </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="20">Il n'y a pas d'événements</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        sessionStorage.setItem('active','event');
+    </script>
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h2>Créer votre compte</h2>
+        {{ include ('users/_formUsers.html.twig', {formUsers: formUsers, button_label: 'Créer'}) }}
+{% endblock %}
+

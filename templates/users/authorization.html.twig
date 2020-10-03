@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.firstName }} {{ user.lastName }}{% endblock %}
+
+{% block body %}
+    <h3 class="offset-3 pt-5">Demande de droits</h3>
+    <div class="container register mt-3">
+        {{ include ('users/_formAutho.html.twig', {formAutho: formAutho, button_label: 'Demande'}) }}
+    </div>
+{% endblock %}

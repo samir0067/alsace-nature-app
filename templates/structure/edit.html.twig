@@ -1,0 +1,47 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Structures organisatrices{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="titleNewEditStruc col-md-10">Modifier une structure organisatrice</h1>
+        </div>
+        <div class="col-md-3">
+            {% if structure.officePhone is not empty %}
+                <a class="btn-lg btnContactStruc" href="tel:+33{{ structure.officePhone }}">Contacter la structure</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container blockFormStruc">
+        {{ include ('structure/_formStructure.html.twig', {formStructure: formStructure, button_label: 'Éditer'}) }}
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
+    <script>
+        (function() {
+            var placesAutocomplete = places({
+                appId: 'plPUZ9YOW39T',
+                apiKey: '8f93b988a893a3ec65c435d6f27fb32a',
+                container: document.querySelector('#form-address'),
+                templates: {
+                    value: function(suggestion) {
+                        return suggestion.name;
+                    }
+                }
+            }).configure({
+                type: 'address'
+            });
+            placesAutocomplete.on('change', function resultSelected(e) {
+                document.querySelector('#form-city').value = e.suggestion.city || '';
+                document.querySelector('#form-zipcode').value = e.suggestion.postcode || '';
+                document.querySelector('#form-departement').value = e.suggestion.county || '';
+            });
+        })();
+
+{% endblock %}

@@ -1,0 +1,68 @@
+.bigquoi {
+    background-color: #EAEBDE;
+}
+
+.quoiquoi {
+    margin-top: 10vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.titrequoi {
+    margin: 1vh 1vh 1vh 12vh;
+    font-size: 3vh;
+    font-weight: lighter;
+    padding-top: 3vh;
+}
+
+.supprimerquoi {
+    float: right;
+    border: solid 1px #8A2822;
+    background-color: #8A2822;
+    color: whitesmoke;
+    margin: 5vh 13vh 2vh 51vh;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    padding: 1vh 3vh 1vh 3vh;
+}
+
+.supprimerquoi:hover {
+    background-color: #bd2d24;
+}
+
+.txtquoi {
+    background-color: whitesmoke;
+    margin: 3vh 12vh 3vh 12vh;
+    padding: 3vh 7vh 3vh 7vh;
+    border: none;
+    border-radius: 0.5vh;
+}
+
+.structurequoi {
+    margin: 1vh 1vh 1vh 12vh;
+    font-size: 3vh;
+    font-weight: lighter;
+    padding-top: 2vh;
+}
+
+.listestructure {
+    margin: 3vh 12vh 3vh 12vh;
+}
+
+.cardSN {
+    margin: 1vh;
+    margin-left: 10vh;
+}
+
+.lienvert {
+    text-decoration: none !important;
+    color: #83B2AD;
+}
+
+
+.lienvert:hover {
+    text-decoration: none !important;
+    color: darkseagreen;
+}
+
+

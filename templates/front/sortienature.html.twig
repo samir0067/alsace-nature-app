@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sorties nature c'est quoi ?{% endblock %}
+
+{% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+
+{% block body %}
+        <div class="bigquoi">
+                <div class="quoiquoi">
+                        <h1 class="titrequoi">Le projet Sorties-nature.org</h1>
+                        <button type="submit" class="supprimerquoi">Supprimer mon compte</button>
+                </div>
+
+                <div class="txtquoi">
+                        <p>Sorties-nature.org est une plateforme en ligne dédiée aux sorties et événements « nature ».
+                                Ce projet, porté par l’association Alsace Nature, membre du mouvement France Nature
+                                Environnement, sera déployé dans un premier temps sur la Région Grand Est.<br>
+                                L’interface cartographique et le jeu de filtres permet à chacun de rechercher et de
+                                participer aux événements proposés par les structures organisatrices, qui sont pour la
+                                plupart des associations du réseau Alsace Nature et FNE.<br> Ces structures organisatrices
+                                sont préalablement sélectionnées, gage d’une certaine qualité pédagogique et technique
+                                des animations proposées.<br>
+                        </p>
+                </div>
+
+                <h1 class="titrequoi">Avant de se lancer, ce qu’il faut savoir</h1>
+
+                <div class="txtquoi">
+                        <p>Sorties-nature.org n’est pas un service public, c’est une plateforme numérique associative de
+                                mise en relation entre des structures qui organisent des événements et le public. <br>
+                                L’hétérogénéité des événements proposés est le reflet de la mobilisation des citoyens et
+                                des moyens dont disposent les associations.<br><br>
+                                En tant que participant : <br><br>
+                                Pour utiliser pleinement toutes les fonctionnalités de la plateforme, vous pouvez vous
+                                créer un compte nominatif. Une fois connecté, chaque participant peut enregistrer des
+                                événements favoris, s’inscrire/se désinscrire à un événement, consulter les événements
+                                auxquels il a, ou va, participer.<br>
+                                Toutes les informations que vous donnerez lors de la création de ce compte seront
+                                utilisée uniquement dans le cadre de Sorties-Nature.org, conformément aux dispositions
+                                de la loi informatique et libertés et les dispositions du règlement 2016/679/UE du
+                                Parlement européen et du Conseil du 27 avril 2016 relatif à la protection des personnes
+                                physiques à l'égard du traitement des données à caractère personnel et à la libre
+                                circulation de ces données.<br>
+                                Et si je ne veux quand même pas me créer un compte sorties-nature.org ?<br><br>
+                                Pour simplement consulter les événements, vous n’avez pas besoin d’être identifié, idem
+                                pour les événements ne requérant pas d’inscription, vous pouvez y aller librement.
+                                Pour les événements qui nécessitent une inscription, les coordonnées de la structure
+                                organisatrice ou de l’intervenant seront toujours publiées pour que vous puissiez vous
+                                inscrire par téléphone ou e-mail. Cependant, un minimum de coordonnées vous sera
+                                forcément demandé par la structure pour pouvoir vous identifier (nom, prénom) et vous
+                                prévenir d’une éventuelle annulation (téléphone ou e-mail.)<br><br>
+                                En tant qu'intervenant : <br><br>
+                                Si vous êtes animateur, guide, etc. vous pouvez proposer des événements via l’interface
+                                « espace intervenant ». Pour cela, vous devez préalablement créer un compte et demander
+                                à être rattaché à une (ou plusieurs) structures organisatrices.<br>
+                                Vous pourrez alors créer des événements au titre de cette structure organisatrice, qui
+                                seront publiés par les administrateurs désignés comme tel par cette même structure.
+                                Chaque intervenant gère ses propres événements et participants, et non ceux des autres,
+                                même s’ils font partie d’une même structure.<br><br>
+                                En tant que structure organisatrice :<br><br>
+                                Pour être référencé comme structure organisatrice, une demande doit être envoyée au
+                                gestionnaire de la plateforme, en désignant un ou plusieurs administrateurs.
+                                Ces administrateurs-structure ont pour rôle de gérer tous les intervenants et événements
+                                de la structure, et uniquement cette structure. En effet, la plateforme est un outil
+                                numérique mis à disposition pour partager les événements nature du réseau : le
+                                gestionnaire de la plateforme n’intervient dans aucun processus de création,
+                                inscription, validation, publication etc. (sauf demande expresse ou assistance).<br>
+                                Les structures organisatrices sont responsables de leurs intervenants et du contenu qui
+                                est proposé lors des animations. Le gestionnaire de la plateforme ne pourra pas être
+                                tenu responsable de tout litige avec des participants à un événement ou des
+                                intervenants.<br>
+                                Des fonctions utiles comme l’export des événements, intervenants, participants ou
+                                l’intégration d’un bilan de sortie sont également proposés. Ce nouveau site est encore
+                                perfectible, aussi nous vous vous prions par avance de bien vouloir nous excuser si
+                                vous rencontrez quelques désagréments dans son utilisation et nous vous remercions de
+                                nous signaler tout dysfonctionnement éventuel à cette adresse :
+                                contact@sortiesnature.org. En effet le site actuel fera l’objet de nouvelles versions
+                                qui tiendront compte des retours d’utilisation. Il vise également à permettre au grand
+                                public de s’engager dans le réseau des bénévoles associatifs.
+                        </p>
+                </div>
+                        <h1 class="structurequoi">Les structures partenaires</h1>
+                <div class="listestructure">
+                        <select class="custom-select selectMenuSecond">
+                                <option selected disabled>Liste déroulante</option>
+{#                                        {% for structure in structures %}#}
+{#                                                <option value="{{ structure.structureType }}">{{ structure.structureType }}</option>#}
+{#                                        {% endfor %}#}
+                        </select>
+                </div>
+                {% for structure in structures %}
+
+                {% if loop.index0 is divisible by(3) %}
+                <div class="row ">
+                        {% endif %}
+                        <div class="card cardSN col-3">
+                                <div class="card-body">
+                                        <h5 class="card-title">{{ structure.completeName }}</h5>
+                                        <p class="card-text">{{ structure.structureType }}</p>
+                                        <img class="card-img-top" src="{{ structure.imageFile }}" alt="Logo structure">
+                                        <p class="card-text">{{ structure.description }}</p>
+                                        <p class="card-text">{{ structure.officeMail }}</p>
+                                        <a class="lienvert" href="{{ structure.website }}"><p class="card-text">{{ structure.website }}</p></a>
+                                </div>
+                        </div>
+                        {% if loop.index is divisible by(3) or loop.last %}
+                                </div>
+                        {% endif %}
+                {% endfor %}
+
+        </div>
+
+{% endblock %}

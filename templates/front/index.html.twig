@@ -1,0 +1,619 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sorties Nature{% endblock %}
+
+{% block body %}
+    <div class="container-fluid front_all">
+        <!-- Menu Front -->
+        <div class="front_menu">
+            <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                <button id="mapButton" type="button" class="btn pr-5 btnMenuCarte"> <img class="icon" alt="picto carte" src="{{ asset('/build/images/icons/carte.png') }}"> CARTE</button>
+                <button id="listeButton" type="button" class="btn pr-5 btnMenuListe"> <img class="icon" alt="picto liste" src="{{ asset('/build/images/icons/liste.png') }}"> LISTE</button>
+            </div>
+        </div>
+        <div id="map"></div>
+        <div id="liste" class="hidden list">
+            {% include 'front/list.html.twig' %}
+        </div>
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalShow" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div id="modalContent" class="modal-dialog modal-lg">
+
+            </div>
+        </div>
+        <!-- Menu Front -->
+        <!-- Filtre Front -->
+        <div class="front_filter">
+            <ul class="filterAllUl">
+                {% if app.user %}
+                <a class="filterA" href="{{ path('index_favorites') }}">
+                    <li>
+                        <div class="filterBtnTop">
+                            <img class="icons" alt="favoris" src="{{ asset('/build/images/icons/star.png') }}">
+                            Mes favoris
+                            <span class="sr-only">(current)</span>
+                        </div>
+                    </li>
+                </a>
+                <a class="filterA" href="{{ path('index_participations') }}">
+                    <li>
+                        <div class="filterBtnTop">
+                            <img class="icons" alt="participation icon" src="{{ asset('/build/images/icons/participation.png') }}">
+                            Mes participations
+                            <span class="sr-only">(current)</span>
+                        </div>
+                    </li>
+                </a>
+                {% endif %}
+                <a class="filterA" href="#">
+                    <li>
+                        <div class="filterBtnTopBottom ">
+                            <img class="icons" alt="picto filtre" src="{{ asset('/build/images/icons/filter.png') }}">
+                            Filtres
+                        </div>
+                    </li>
+                </a>
+                <!--Accordion wrapper-->
+                <div class="accordion md-accordion filterAccordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+                    <form method="post" action="{{ path('index_filter') }}">
+                    <!-- Accordion card 1 -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header filterBtnA" role="tab" id="headingOne1" >
+                            <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                               aria-controls="collapseOne1">
+                                <h5 class="mb-0">
+                                    <img class="iconArrow" alt="dropdown icon" src="{{ asset('/build/images/icons/drop-down-arrow.svg') }}">
+                                    Catégories
+                                </h5>
+                            </a>
+                        </div>
+                        <!-- Card body -->
+                        <div id="collapseOne1" class="collapse show filterCategory" role="tabpanel" aria-labelledby="headingOne1" data-parent="#accordionEx">
+                            <div class="card-body">
+                                <div class="form-check filterDiv">
+                                    <div class="row CheckAnim">
+                                        <h4><input type="radio" name="category" value="all" checked> Tous</h4>
+                                    </div>
+                                </div>
+                                {% for category in categorieList %}
+                                <hr>
+                                <div class="form-check filterDiv">
+                                        <input type="radio" id="{{ category.name }}" name="category" value="{{ category.name }}" >
+                                        <label for="{{ category.name }}">
+                                            <img class="iconCat" src="{{ asset('/build/images/icons/'~category.name|lower~'.png') }}" alt="logo"> {{ category.displayName }}
+                                        </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Accordion card 2 -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header filterBtnA" role="tab" id="headingTwo2">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                               aria-expanded="false" aria-controls="collapseTwo2">
+                                <h5 class="mb-0">
+                                    <img class="iconArrow" alt="drowpdown icon" src="{{ asset('/build/images/icons/drop-down-arrow.svg') }}">
+                                    Thématiques
+                                </h5>
+                            </a>
+                        </div>
+                        <!-- Card body -->
+                        <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2" data-parent="#accordionEx">
+                            <div class="card-body">
+                                <div class="form-check filterDiv">
+                                    <div class="row CheckAnim">
+                                        <h4><input type="radio" name="theme" value="all" checked> Tous</h4>
+                                    </div>
+                                </div>
+                                {% for theme in themeList %}
+                                <hr>
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" type="radio" id="{{ theme.name }}" name="theme" value="{{ theme.name }}">
+                                    <label class="form-check-label" for="{{ theme.name }}">{{ theme.displayName }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion card 3 -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header filterBtnA" role="tab" id="headingThree3">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
+                               aria-expanded="false" aria-controls="collapseThree3">
+                                <h5 class="mb-0">
+                                    <img class="iconArrow" alt="drowpdown icon" src="{{ asset('/build/images/icons/drop-down-arrow.svg') }}">
+                                    Dates
+                                </h5>
+                            </a>
+                        </div>
+                        <!-- Card body -->
+                        <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3" data-parent="#accordionEx">
+                            <div class="card-body">
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" name="dateStart" type="radio" value="today" id="gridCheck16">
+                                    <label class="form-check-label"  for="gridCheck16">Aujourd’hui</label>
+                                </div>
+                                <hr>
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" type="radio" name="dateStart" value="week" id="gridCheck17">
+                                    <label class="form-check-label" for="gridCheck17">Cette semaine</label>
+                                </div>
+                                <hr>
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" type="radio" name="dateStart" value="week-end" id="gridCheck18">
+                                    <label class="form-check-label"  for="gridCheck18">Ce week-end</label>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div id="date-Start" class="md-form md-outline input-with-post-icon datepicker col-md-5">
+                                        <input type="date" id="dateStart" name="dateStart" class="form-control">
+                                        <label for="dateStart">Du</label>
+                                        <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                                    </div>
+                                    <div id="date-Stop" class="md-form md-outline input-with-post-icon datepicker col-md-5">
+                                        <input type="date" id="dateStop" name="dateStop" class="form-control">
+                                        <label for="dateStop">Au</label>
+                                        <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion card 4 -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header filterBtnA" role="tab" id="headingFour4">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFour4"
+                               aria-expanded="false" aria-controls="collapseFour4">
+                                <h5 class="mb-0">
+                                    <img class="iconArrow" alt="drowpdown icon" src="{{ asset('/build/images/icons/drop-down-arrow.svg') }}">
+                                    Zone géographique
+                                </h5>
+                            </a>
+                        </div>
+                        <!-- Card body -->
+                        <div id="collapseFour4" class="collapse" role="tabpanel" aria-labelledby="headingThree4" data-parent="#accordionEx">
+                            <div class="card-body">
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" type="checkbox" id="gridCheck19">
+                                    <label class="form-check-label" for="gridCheck19">Zone géographique</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion card 5 -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header filterBtnA" role="tab" id="headingFive5">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFive5"
+                               aria-expanded="false" aria-controls="collapseFive5">
+                                <h5 class="mb-0">
+                                    <img class="iconArrow" alt="drowpdown icon" src="{{ asset('/build/images/icons/drop-down-arrow.svg') }}">
+                                    Structures organisatrices
+                                </h5>
+                            </a>
+                        </div>
+                        <!-- Card body -->
+                        <div id="collapseFive5" class="collapse" role="tabpanel" aria-labelledby="headingThree6" data-parent="#accordionEx">
+                            {% for structure in structures %}
+                                    <div class="card-body">
+                                        <div class="form-check filterDiv">
+                                            <input class="btnCheckboxIndex" type="radio" name="structure" id="gridCheck20" value="{{ structure.completeName }}">
+                                            <label class="form-check-label" for="gridCheck20">{{ structure.completeName }}</label>
+                                        </div>
+                                    </div>
+                                    <hr class="m-0">
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Accordion card 6 -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header filterBtnA" role="tab" id="headingSix6">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseSix6"
+                               aria-expanded="false" aria-controls="collapseSix6">
+                                <h5 class="mb-0">
+                                    <img class="iconArrow" alt="drowpdown icon" src="{{ asset('/build/images/icons/drop-down-arrow.svg') }}">
+                                    Autres
+                                </h5>
+                            </a>
+                        </div>
+                        <!-- Card body -->
+                        <div id="collapseSix6" class="collapse" role="tabpanel" aria-labelledby="headingThree7" data-parent="#accordionEx">
+                            <div class="card-body">
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" type="checkbox" name="options[]" value="free" id="gridCheck21">
+                                    <label class="form-check-label" for="gridCheck21">Sorties gratuites</label>
+                                </div>
+                                <hr>
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" type="checkbox" name="options[]" value="register" id="gridCheck22">
+                                    <label class="form-check-label" for="gridCheck22">Inscription facultative</label>
+                                </div>
+                                <hr>
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" type="checkbox" id="gridCheck23">
+                                    <label class="form-check-label" for="gridCheck23">Accessibilité PMR</label>
+                                </div>
+                                <hr>
+                                <div class="form-check filterDiv">
+                                    <input class="btnCheckboxIndex" type="checkbox" id="gridCheck24">
+                                    <label class="form-check-label" for="gridCheck24">Animaux acceptés</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="btn-group">
+                            <button class="button btn markerBtn m-2 btn-lg" type="submit">Filtrer</button>
+                            <a class="button btn markerBtn m-2 btn-lg" href="{{ path('index_map') }}">RESET Filtres</a>
+                        </div>
+                    </form>
+                </div>
+                <!-- Accordion wrapper -->
+            </ul>
+        </div>
+    </div>
+        <!-- Filtre Front -->
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnybk1Ebv_PHGCHd7EERInVcLN9Ril_Ss&callback=initMap">
+    </script>
+    <script>
+        var locations = [];
+        {% for event in eventDetails %}
+            {% for categories in event.category %}
+                let category{{ event.id }} = '{{ categories.name }}';
+            {% endfor %}
+            {% for themes in event.theme %}
+                let themeR{{ event.id }} = '{{ themes.name }}'.replace('é','e')
+                let theme{{ event.id }} = themeR{{ event.id }};
+            {% endfor %}
+        let icn{{ event.id }} = category{{ event.id }}+theme{{ event.id }};
+        var array{{ event.id }} = [
+            '<div class="markerInfo col-12">' +
+            '<div class="markerImage col-1 {% for themes in event.theme %}'+
+            '{{ themes.name|lower|replace({'é': 'e' })  }} {% endfor %}" >'+
+            '{% for categories in event.category %}'+
+            '<img src="{{ asset('/build/images/icons/'~categories.name|lower~'.png') }}">{% endfor %}</div>'+
+            '<div class="markerContent col-11 p-3">' +
+            '<h4 class="newColor">{{ event.dateStart|date('d-m-Y') }}</h3>' +
+            '<h3 class="markerTitle">{{ event.title }}</h3>' +
+            '<p>{{ event.description }}</p>'+
+            '<div class="markerSep">'+
+            '<div>'+
+            '<p>Structure: <span class="newColor">{% if event.structure.usualName is not null %}'+
+            '{{ event.structure.usualName}} {% else %} {{ event.structure.completeName }} {% endif %}</span></p>'+
+            '<p>Places restantes: {% if  event.registerRequired == 1 %}'+
+            '<span class="text-danger">{{ event.maxParticipants }}</span>{% else %} Pas de limite {% endif %} </p>'+
+            '</div>'+
+            '<div>'+
+            '<a class="button btn markerBtn" onclick="ajaxModale({{ event.id }})" data-toggle="modal" data-target=".bd-example-modal-lg">VOIR PLUS</a>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '</div>'
+            , {{ event.latitude }}, {{ event.longitude }},
+            '{{ event.description }}',icn{{ event.id }}];
+        locations.push(array{{ event.id }});
+        {% endfor %}
+
+
+        function initMap() {
+            var nancy = {lat: 48.6833, lng: 6.2};
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 9, center: nancy,
+                    styles: [
+                        {
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#ebe3cd"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#523735"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#f5f1e6"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#c9b2a6"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#dcd2be"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "labels",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#ae9e90"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape.natural",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#ebe1c7"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#dfd2ae"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#93817c"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.business",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#d5dbb3"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#3b4d1b"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#f5f1e6"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.arterial",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#fdfcf8"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#f8c967"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#e9bc62"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "labels",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#806b63"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#dfd2ae"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#8f7d77"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#ebe3cd"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.station",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#dfd2ae"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#94b1ae"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#4e6966"
+                                }
+                            ]
+                        }
+                    ]});
+
+            var infoWindow = new google.maps.InfoWindow();
+
+            let tab = [];
+
+
+            //A ajuster avec une boucle sur les catégories/thèmes?
+            var icons = {
+                {% for categories in categorieList %}
+                {% for themes in themeList %}
+                '{{ categories.name~themes.name|replace({'é': 'e' })}}' : {
+                    icon: "{{asset('/build/images/markers/'~ categories.name|lower ~'-'~themes.name|lower|replace({'é': 'e' }) ~'.png')}}"
+                },
+                {% endfor %}
+                {% endfor %}
+            };
+
+            var marker, i;
+
+            for (let i =0; i < locations.length; i++) {
+                let marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),icon: icons[locations[i][4]].icon,
+                    size: new google.maps.Size(2, 1), map:map
+
+                });
+
+                //open with mouseOver and close click somewhere else
+                google.maps.event.addListener(marker,'mouseover',(function(marker,i) {
+                    return function() {
+                        infoWindow.setContent(locations[i][0]);
+                        infoWindow.open(map,marker);
+                        google.maps.event.addListener(map,'click',(function(marker,i) {
+                            return function() {
+                                infoWindow.close(map,marker);
+                            }
+                        }) (marker,i));
+                    }
+                }) (marker,i));
+            }
+        }
+
+
+        var map = document.getElementById('map');
+        var mapBtn = document.getElementById('mapButton');
+
+        var liste = document.getElementById('liste');
+        var listeBtn = document.getElementById('listeButton');
+
+
+        mapBtn.addEventListener('click', function() {
+            liste.classList.add("hidden");
+            map.classList.remove("hidden");
+        })
+
+        listeBtn.addEventListener('click', function() {
+            map.classList.add("hidden");
+            liste.classList.remove("hidden");
+        })
+
+    </script>
+
+{% endblock %}

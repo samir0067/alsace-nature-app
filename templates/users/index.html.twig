@@ -1,0 +1,148 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+    <!-- Menu Head Table-->
+    <div class="headContent">
+        <div class="row">
+            <h3>Utilisateurs</h3>
+            <div class="buttons">
+                <a href="{{ path('users_new') }}"><button class="btn btnCreate">Créer</button></a>
+{#                 TODO: ces boutons ne fonctionnent pas! #}
+{#                <a href="#"><button class="btn btnCreate">Importer</button></a>#}
+{#                <a href="#"><button class="btn btnCreate">Exporter</button></a>#}
+            </div>
+        </div>
+        <div class="row">
+            <p class="filterUnderHead"><span class="activeFilter">Tous ({{ users|length }}) </span></p>
+{#                 TODO: ces filtres ne fonctionnent pas! #}
+{#            <p class="filterUnderHead">Participants ({{ ... }}) </p>#}
+{#            <p class="filterUnderHead">Intervenants ({{ ... }}) </p>#}
+        </div>
+    </div>
+    <!-- Menu Head Table-->
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <!-- Menu filter Table-->
+    <div class="row toFlex">
+{#        A implémenter #}
+{#        <div class="firstFilterEvent">#}
+{#            <select class="custom-select selectMenu">#}
+{#                <option selected disabled>Actions groupées</option>#}
+{#                <option >Supprimer</option>#}
+{#                <option>Exporter</option>#}
+{#            </select>#}
+{#            <button class="btn btnCreate">Appliquer</button>#}
+{#        </div>#}
+        <div class="secondFilterEvent">
+            <select class="custom-select selectMenuSecond">
+                <option selected disabled>Type d’utilisateur</option>
+                {% for user in users %}
+                    {% for roles in user.roles %}
+                        <option value="{{ roles }}">
+                            {% if roles == "ROLE_ADMIN" %} Super Administrateur
+                            {% elseif roles == "ROLE_TERRITORY"  %}
+                                Administrateur Territoire
+                            {% elseif roles == "ROLE_ORGA"  %}
+                                Administrateur Structure
+                            {% elseif roles == "ROLE_EVENT"  %}
+                                Intervenant
+                            {% else %}
+                                Participant
+                            {% endif %}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+            <select class="custom-select selectMenuSecond">
+                <option selected disabled>Zones géographique</option>
+                <option value="67">Bas-Rhin</option>
+                <option value="68">Haut-Rhin</option>
+                <option value="88">Vosges</option>
+                <option value="54">Meurthe-et-Moselle</option>
+                <option value="57">Moselle</option>
+                <option value="55">Meuse</option>
+                <option value="52">Haute-Marne</option>
+                <option value="08">Ardennes</option>
+                <option value="51">Marne</option>
+                <option value="10">Aube</option>
+            </select>
+            <select class="custom-select selectMenuSecond">
+                <option selected disabled>Structure</option>
+                {% for struc in structure %}
+                    <option value="{{ struc.completeName }}">{{ struc.completeName }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btnCreate">Filtrer</button>
+        </div>
+    </div>
+    <!-- Menu filter Table-->
+    <!-- Table with panel -->
+    <div class="tableEvent">
+        <table class="table table-striped">
+            <thead>
+            <tr class="headTable">
+                <th><input type="checkbox" disabled></th>
+                <th>Nom complet</th>
+                <th>Zone géographique</th>
+                <th>Structure</th>
+{#                 TODO: non fonctionnel! #}
+{#                <th>En attente</th>#}
+                <th>Type d’utilisateur</th>
+            </tr>
+            </thead>
+            <!--Table head-->
+
+            <!--Table body-->
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        <a href="{{ path('users_show', {id:user.id}) }}">
+                        {{ user.firstName }} {{ user.lastName }}</a>
+                    </td>
+                    <td>{{ user.city }}</td>
+                    <td>{% if user.staffStructures is not empty %}{% for structure in user.staffStructures %}
+                            {{ structure.completeName }}{% if not loop.last %},{% endif %}
+                    {% endfor %} {% else %} Aucune structure {% endif %}</td>
+                    {#                 TODO: non fonctionnel! #}
+{#                    <td>"En attente"</td>#}
+                    <td>
+                            {% if user.roles is not empty %}
+                                {% for role in user.roles %}
+                                    {% if role == "ROLE_ADMIN" %} Super Administrateur
+                                            {% elseif role == "ROLE_TERRITORY"  %}
+                                                Administrateur Territoire
+                                            {% elseif role == "ROLE_ORGA"  %}
+                                                Administrateur Structure
+                                                {% elseif role == "ROLE_EVENT"  %}
+                                            Intervenant
+                                                    {% else %}
+                                            Participant
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %} Participant {% endif %}
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="20">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <!--Table body-->
+        </table>
+    </div>
+    <!-- Table with panel -->
+{% endblock %}
+{% block javascripts %}
+    <script>
+        sessionStorage.setItem('active','user');
+    </script>
+    {{ parent() }}
+{% endblock %}

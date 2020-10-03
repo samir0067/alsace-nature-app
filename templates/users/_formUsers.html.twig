@@ -1,0 +1,64 @@
+{{ form_start(formUsers) }}
+<div class="container container-back mt-5">
+    <h3>Information de connexion</h3>
+    <div class="row align-items-end bt-3 ml-4">
+        <div class="col-md-7">
+            <div class="col-md-12">{{ form_row(formUsers.mail,
+                    {'label': 'Email*', 'attr': {'placeholder': 'Adresse email ...'}}) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end bt-3 ml-4">
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formUsers.password,
+                    {'label': 'Mot de passe*', 'attr': {'placeholder': 'Votre mot de passe'}}) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formUsers.plainPassword,
+                    {'label': 'Confirmation de votre mot de passe*', 'attr': {'placeholder': 'Répétez votre mot de passe*'}}) }}</div>
+        </div>
+    </div>
+</div>
+<div class="container container-back mt-5">
+    <h3>Information de contact</h3>
+    <div class="row align-items-end bt-3 ml-4">
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formUsers.lastname,
+                    {'label': 'Nom*', 'attr': {'placeholder': 'Votre nom ...'}}) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formUsers.firstname,
+                    {'label': 'Prénom*', 'attr': {'placeholder': 'Votre prénom ...'}}) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end bt-3 ml-4">
+        <div class="col-md-12">
+            <div class="col-md-12">{{ form_row(formUsers.address,
+                    {'label': 'Adresse postale*', 'attr': {'placeholder': 'Adresse ...'}}) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end bt-3 ml-4">
+        <div class="col-md-6">
+            <div class="col-md-5">{{ form_row(formUsers.zipcode,
+                    {'label': 'Code postal*', 'attr': {'placeholder': 'Code postal ...'}}) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">{{ form_row(formUsers.city,
+                    {'label': 'Commune*', 'attr': {'placeholder': 'Commune ...'}}) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end bt-3 ml-4">
+        <div class="col-md-4">
+            <div class="col-md-12">{{ form_row(formUsers.phone,
+                    {'label': 'Téléphone', 'attr': {'placeholder': 'Numéro ...'}}) }}</div>
+        </div>
+    </div>
+    <p class="messageFormUsers">Vos informations de contact resteront confidentielles,
+        elles sont utiles pour faciliter le traitement de votre inscription
+    </p>
+</div>
+    <div class="row mb-5">
+        <a href="{{ path('users_index') }}" class="btn btn-danger ml-3 mr-2">Annuler</a>
+        <button class="btn btnCreate mr-2">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_rest(formUsers) }}
+    </div>
+{{ form_end(formUsers) }}

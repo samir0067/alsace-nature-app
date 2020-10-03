@@ -1,0 +1,33 @@
+<header>
+    <div class="bandeNoir">
+        <a class="what mt-3 ml-4" href="{{ path("index_sortienature") }}">Sorties nature c'est quoi ?</a>
+        <a class="intervenant" href="{{ path("evenement_index") }}">
+            <p><img alt="espace intervenant" src="{{ asset('/build/images/icons/espace inter.png') }}">
+                ESPACE INTERVENANTS</p></a>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light bigOne">
+        <div class="navbar-bandeau">
+            <img class="bandeauHeader" src="{{ asset('/build/images/bandeau-5120-800.png') }}" alt="">
+            <a href="{{ path("index_map") }}"><img class="logoHeader img-responsive" src="{{ asset('/build/images/logo-sorties-nature.png') }}" alt=""> </a>
+        </div>
+        <button class="navbar-toggler burger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse menuNav" id="navbarSupportedContent">
+            {% if app.user %}
+                <a href="{{ path('index_myAccount') }}"><button type="button" class="myAccount">Mon Compte</button></a>
+                <a href="{{ path('app_logout') }}"><button class="nav-link inscription">Déconnexion</button></a>
+            {% else %}
+                <a href="{{ path('app_login') }}">
+                    <button type="button" class="myAccount">Se connecter</button>
+                </a>
+                <a href="{{ path('app_register') }}"><button class="nav-link inscription">Inscrivez-vous</button></a>
+            {% endif %}
+
+{#                 TODO: non fonctionnel! #}
+{#            <form class="form-inline my-2 formSearch">#}
+{#                <input class="form-control mr-sm-2 texteArea" type="search" placeholder="Search" aria-label="Search">#}
+{#            </form>#}
+        </div>
+    </nav>
+</header>

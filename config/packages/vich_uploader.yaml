@@ -1,0 +1,16 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        file_logo_structure:
+            uri_prefix: '%app.path.file_logo_structure%'
+            upload_destination: '%kernel.project_dir%/public%app.path.file_logo_structure%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        file_img_event:
+            uri_prefix: '%app.path.file_img_event%'
+            upload_destination: '%kernel.project_dir%/public%app.path.file_img_event%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        file_picture_report:
+            uri_prefix: '%app.path.file_picture_report%'
+            upload_destination: '%kernel.project_dir%/public%app.path.file_picture_report%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

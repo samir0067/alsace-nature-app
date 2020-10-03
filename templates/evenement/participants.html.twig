@@ -1,0 +1,68 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Evenement - participants {% endblock %}
+
+{% block body %}
+
+    <h3>Participants à l'évenement {{ evenement.title }} [{{ evenement.dateStart|date('d/m/Y') }}] </h3>
+
+    <p> Il ya {{ evenement.nbrParticipants }} participants mais seulement {{ evenement.participant.count() }} sont des membres du site. (Les autres sont des accompagnants)</p>
+
+    <div class="tableEvent">
+        <table class="table table-striped">
+            <thead>
+            <tr class="headTable">
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Mail</th>
+                <th>Téléphone</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% if evenement.participant is not empty %}
+                {% for participant in evenement.participant %}
+
+                    <tr>
+                        <td>{{ participant.firstName }}</td>
+                        <td>{{ participant.lastName }}</td>
+                        <td>{{ participant.mail }}</td>
+                        <td>0{{ participant.phone }}</td>
+                    </tr>
+                    {% endfor %}
+
+            {% else %}
+                    <tr>
+                        <td colspan="20">Il n'y a pas encore de participant</td>
+                    </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        {% if evenement.childrens is not empty %}
+            Il ya {{ evenement.childrens.count() }} enfant(s).
+
+            <div class="tableEvent">
+        <table class="table table-striped">
+            <thead>
+            <tr class="headTable">
+                <th>Age</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for children in evenement.childrens %}
+            <tr><td>{{ children.age }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    <a class="buttonType" href="{{ path('evenement_index') }}">Retour aux événements</a>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        sessionStorage.setItem('active','event');
+    </script>
+    {{ parent() }}
+{% endblock %}

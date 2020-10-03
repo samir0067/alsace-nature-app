@@ -1,0 +1,125 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Structures organisatrices{% endblock %}
+
+{% block body %}
+    <!-- Menu Head Table-->
+    <div class="headContent">
+        <div class="row">
+            <h3>Structures organisatrices</h3>
+            <div class="buttons">
+                <a href="{{ path('structure_new') }}"><button class="btn btnCreate">Créer</button></a>
+{#                 TODO: ces boutons ne fonctionnent pas! #}
+{#                <a href="#"><button class="btn btnCreate">Importer</button></a>#}
+{#                <a href="#"><button class="btn btnCreate">Exporter</button></a>#}
+            </div>
+        </div>
+        <div class="row">
+            <p class="filterUnderHead"><span class="activeFilter">Tous ({{ structures|length }}) </span></p>
+{#                 TODO: ces filtres ne fonctionnent pas! #}
+{#            <p class="filterUnderHead">Acceptées (4) </p>#}
+{#            <p class="filterUnderHead">Refusées (1) </p>#}
+{#            <p class="filterUnderHead">Supprimés (1)</p>#}
+        </div>
+    </div>
+    <!-- Menu Head Table-->
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <!-- Menu filter Table-->
+    <div class="row toFlex">
+        <div class="firstFilterEvent">
+            <select class="custom-select selectMenu">
+                <option selected disabled>Actions groupées</option>
+                <option >Dupliquer</option>
+                <option>Valider (publier)</option>
+                <option>Refuser la publication</option>
+                <option>Annuler (reste publié)</option>
+                <option>Exporter évènement</option>
+                <option>Exporter participants</option>
+                <option>Supprimer (dépublier)</option>
+            </select>
+            <button class="btn btnCreate">Appliquer</button>
+        </div>
+        <div class="secondFilterEvent">
+            <select class="custom-select selectMenuSecond">
+                <option selected disabled>Zones géographique</option>
+                <option value="67">Bas-Rhin</option>
+                <option value="68">Haut-Rhin</option>
+                <option value="88">Vosges</option>
+                <option value="54">Meurthe-et-Moselle</option>
+                <option value="57">Moselle</option>
+                <option value="55">Meuse</option>
+                <option value="52">Haute-Marne</option>
+                <option value="08">Ardennes</option>
+                <option value="51">Marne</option>
+                <option value="10">Aube</option>
+            </select>
+            <select class="custom-select selectMenuSecond">
+                <option selected disabled>Type</option>
+                {% for structure in structures %}
+                    {% for structure in structures %}
+                        <option value="{{ structure.structureType }}">{{ structure.structureType }}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+            <select class="custom-select selectMenuSecond">
+                <option selected>Statut</option>
+                <option>Acceptées</option>
+                <option>Refusées</option>
+            </select>
+            <button class="btn btnCreate">Filtrer</button>
+        </div>
+    </div>
+    <!-- Menu filter Table-->
+
+    <!-- Table with panel -->
+    <div class="tableEvent">
+        <table class="table table-striped">
+            <thead>
+            <tr class="headTable">
+                <th><input type="checkbox" disabled></th>
+                <th>Nom</th>
+                <th>Type de structure</th>
+                <th>Zone géographique</th>
+                <th>Nom représentent structure</th>
+{#                 TODO: non fonctionnel! #}
+{#                <th>Statut</th>#}
+            </tr>
+            </thead>
+            <!--Table head-->
+            <!--Table body-->
+            <tbody>
+            {% for structure in structures %}
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        <a href="{{ path('structure_show', {id:structure.id}) }}">
+                            {{ structure.completeName }}
+                        </a>
+                    </td>
+                    <td>{{ structure.structureType }}</td>
+                    <td>{{ structure.territoryOffice }}</td>
+                    <td>{{ structure.legalRpFirstName }} {{ structure.legalRpLastName }}</td>
+    {#                 TODO: non fonctionnel! #}
+{#                    <td>Status</td>#}
+                </tr>
+            {% else %}
+                <tr>
+                    <th scope="row" colspan="6" >Aucun Enregistrement</th>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <!--Table body-->
+        </table>
+    </div>
+    <!-- Table with panel -->
+{% endblock %}
+{% block javascripts %}
+    <script>
+        sessionStorage.setItem('active','structure');
+    </script>
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Back-office{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,300&display=swap" rel="stylesheet">
+    {% endblock %}
+</head>
+
+{% include "/layout/headerBack.html.twig" %}
+
+<body>
+
+<div class="col-12 row">
+    {% include "/layout/navBack.html.twig" %}
+    <div class="col-9 principalContent">
+        <div class="content container">
+    {% block body %}
+        {% for category, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+                    <div class="headContent">
+                        <div class="row">
+                            <h3>Structures organisatrices</h3>
+                            <div class="buttons">
+                                <button class="buttonType">Créer</button>
+                                <button class="buttonType">Importer</button>
+                                <button class="buttonType">Exporter</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p class="filterUnderHead">Tous (5) </p>
+                            <p class="filterUnderHead"><span class="activeFilter">Acceptées</span> (4) </p>
+                            <p class="filterUnderHead">Refusées (1) </p>
+                            <p class="filterUnderHead">Supprimés (1)</p>
+                        </div>
+                    </div>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur est tortor, consequat nec leo vel, fermentum hendrerit nisl. Suspendisse luctus imperdiet lacus tincidunt consectetur. Nam venenatis iaculis tincidunt. Aliquam vel semper libero. Aliquam id ullamcorper massa. Curabitur quam velit, dignissim in pharetra et, semper eu dolor. Praesent nunc nulla, fermentum ut diam nec, cursus laoreet tellus. Integer vel ipsum in orci suscipit dictum. Mauris sit amet elementum risus, in maximus sem. Sed commodo malesuada ex ut tempor. Phasellus et diam ut massa dapibus pharetra finibus eu lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam dui tortor, iaculis et lorem at, feugiat venenatis mauris. Proin vel luctus urna.
+
+                    Proin convallis, orci non gravida ullamcorper, dolor ligula finibus dui, non ullamcorper est eros sit amet mi. Integer auctor sollicitudin eleifend. Donec eu est nec neque semper placerat. Nam at faucibus dui, eget dictum arcu. Vestibulum vestibulum velit et risus volutpat, et pretium quam finibus. Cras pellentesque nisl lacus, quis dictum justo mattis ac. Suspendisse ut arcu vel justo malesuada dictum ac et orci.
+
+                    Phasellus posuere eros libero, ac molestie lectus tempus vitae. Nunc id metus et leo consequat vehicula. Nam vel dui eros. Sed pulvinar ex lectus, sit amet vehicula nisl tempor quis. Morbi molestie sapien in nisl aliquam varius. Aliquam sit amet risus est. Vivamus in velit eleifend, rutrum nunc eget, tempor dui. Nam non est mi. Mauris vel lacus augue. Aliquam tempus diam quis nisl molestie fermentum. Integer malesuada sem ut felis ultrices, eu mattis neque dapibus. Maecenas accumsan quis lacus et dignissim. In hac habitasse platea dictumst. Ut non ex augue. Morbi iaculis venenatis dolor nec aliquam.
+
+                    Maecenas a dolor facilisis, viverra enim rhoncus, sagittis urna. Fusce quis sem ac libero vulputate luctus. In aliquet ornare ante. Aenean eu mi non tellus tincidunt pellentesque. Nullam pharetra efficitur fermentum. Nunc consectetur cursus quam id tempus. Cras libero lectus, porta eget dapibus nec, dictum sed nibh. Fusce nec neque pretium, consectetur mi vel, dapibus nisl. Praesent ac maximus nisi. Aliquam accumsan tempus nisi, a porta mauris scelerisque ut. Ut velit odio, sodales gravida viverra rutrum, vulputate sed ligula. Nam vestibulum vehicula lacus sit amet vestibulum. Donec ac semper erat, eget consectetur elit. Nulla a placerat metus. Suspendisse nec sodales elit, sit amet convallis tortor.
+
+                    Nullam vel eros venenatis, elementum turpis in, sollicitudin neque. Duis sed lectus scelerisque diam elementum porta. In ut lectus urna. Donec ullamcorper ut magna ac posuere. Cras semper accumsan ultricies. Aenean consequat pharetra odio, non luctus odio ullamcorper et. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent congue nulla nibh, ut vehicula nisl bibendum fermentum. Nulla quis sollicitudin ligula. Duis pulvinar ex id orci gravida feugiat. Morbi velit turpis, congue a ornare vitae, elementum non sapien. Aenean scelerisque consequat purus, non dapibus erat suscipit eget. Vivamus eget tempus felis.
+
+                    Pellentesque cursus vestibulum arcu nec scelerisque. Maecenas tincidunt quam nec arcu euismod, quis gravida tellus pretium. Nunc a sem dolor. Mauris vitae fermentum metus, vel imperdiet sem. Etiam in metus eu libero euismod luctus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam aliquet sapien a tellus ultrices fringilla. Praesent vitae vulputate quam. Suspendisse potenti.
+
+                    Integer posuere, enim sed tempus viverra, nibh odio porttitor ante, quis tempus ex mauris nec sem. Nulla interdum posuere tellus, quis convallis velit condimentum quis. Quisque ornare aliquet tortor et hendrerit. Nam nisi ligula, elementum ut sapien non, fringilla lobortis elit. Maecenas a urna ac mauris scelerisque pellentesque. Sed sit amet nulla mi. Morbi a faucibus lectus. Suspendisse pretium eros ante, eu elementum nunc semper ut. Nunc in viverra arcu, ut gravida ligula. Quisque sapien diam, bibendum et placerat ultricies, pharetra eu metus. Vivamus euismod neque a magna tempus, nec convallis leo venenatis. Etiam sed mauris urna. Integer lobortis posuere risus, sit amet pellentesque ligula tempor ut. Vivamus porta metus sed quam vehicula, mollis ultrices sapien interdum. Duis consectetur vestibulum felis at molestie. Mauris feugiat scelerisque mauris in condimentum.
+
+                    Duis laoreet erat sit amet elit condimentum tempor. Nulla arcu dui, suscipit et pharetra at, ullamcorper ut mauris. Suspendisse laoreet feugiat urna, in finibus ligula hendrerit nec. Phasellus fermentum bibendum neque eget ultricies. Sed rhoncus augue vel augue finibus, pulvinar pretium sem porttitor. Mauris efficitur tortor sit amet urna pharetra convallis. Integer porttitor ultricies mauris sed interdum. In eu mauris tempus, convallis nisi eu, faucibus odio.
+
+                    Integer eget est eget ligula fermentum bibendum. Etiam ut magna erat. Nulla quis sapien non ligula bibendum varius. Vestibulum venenatis feugiat tellus vitae tempor. Cras tempus urna vel tortor porttitor convallis. In vel maximus mi. Quisque feugiat molestie tellus gravida condimentum. In hac habitasse platea dictumst. Etiam porta, ligula vitae placerat mattis, nibh sapien tempus eros, quis dapibus tortor erat ac mi. Proin sit amet mi urna.
+
+                    Nam posuere condimentum iaculis. Nam et dui metus. Aenean eget vestibulum dolor. Etiam pharetra nulla a ullamcorper mattis. Duis sollicitudin eu mi in interdum. Mauris a commodo massa, eget feugiat sem. Ut eget tincidunt sapien. Proin lectus metus, iaculis a venenatis ut, dictum nec lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus at euismod sapien.
+                </p>
+
+    {% endblock %}
+            </div>
+        </div>
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+
+            <script>
+                var session = sessionStorage.getItem('active');
+                var active = document.getElementById(session);
+                active.classList.add('active');
+
+                $(document).ready(function () {
+                    $('select').select2();
+                });
+            </script>
+        {% endblock %}
+        {% block addJavascripts %}
+        {% endblock %}
+
+    </div>
+    </body>
+</html>

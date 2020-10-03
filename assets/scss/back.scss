@@ -1,0 +1,142 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.headerBack {
+    background: black;
+    color: #5F827E;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5vh 1vw;
+    font-weight: bold;
+}
+
+.homeBack {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.homeBack img {
+    width: 3vh;
+}
+
+.homeBack p {
+    padding-top: 2vh;
+    padding-left: 0.5vw;
+}
+
+.content {
+    padding: 0!important;
+}
+
+.btn-back, .btn-back:hover {
+    background: #32373D;
+    color: #5F827E;
+}
+
+.dropdown-menu, .dropdown-menu a {
+    background: #32373D;
+    color: white;
+    font-weight: bold;
+}
+
+.dropdown-menu a:hover {
+    background: #4E6966;
+}
+
+.principalContent {
+    padding-top: 5%;
+    text-align: justify;
+    background-color: #eaebde;
+}
+
+.sorties_nature_logo_01 {
+    background-color: #ffffff !important;
+    padding: 10% 0 0 10% !important;
+    height: 10vw !important;
+}
+
+.boxLogo {
+    position: absolute;
+    overflow: visible;
+    width: 280px;
+    height: 128px;
+    left: 0px;
+    top: 0px;
+}
+
+.menuBackOffice {
+    text-align: left !important;
+    padding-left: 20% !important;
+    background-color: #5f827e !important;
+    border: none !important;
+    color: #ffffff !important;
+    position: static;
+    transition: all 0.3s ease-in-out;
+}
+
+.menuBackOffice:hover {
+    background-color: #4e6966 !important;
+}
+
+.menuIconBack {
+    width: 7%;
+    margin-right: 10px;
+}
+
+.active {
+    background-color: #4e6966 !important;
+    border: none !important;
+}
+
+.col-3 {
+    padding-right: 0 !important;
+}
+
+.col-12 {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.list-group {
+    position: relative;
+    background-color: #5f827e !important;
+    border-radius: 0 !important;
+}
+
+.buttons {
+    margin-left: 15px;
+}
+
+.buttonType {
+    background-color: #83b2ad;
+    border: none;
+    padding: 5px 8px;
+    margin-right: 5px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.headContent {
+    margin-bottom: 5%;
+}
+
+.filterUnderHead {
+    margin-right: 3px;
+}
+
+.activeFilter {
+    color: #678e8a;
+}
+
+.logoSortiesNatureBack {
+    max-width: 15vw;
+}
+
+.container-back {
+    background: #f4f4ed;
+}

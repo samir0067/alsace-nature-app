@@ -1,0 +1,15 @@
+<header class="headerBack">
+    <div class="homeBack">
+        <img src="{{ asset('/build/images/icons/icon-backfront.png') }}" alt="maison">
+        <a href="{{ path('index_map') }}"><p>Sorties nature</p></a>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-back dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Bonjour {{ app.user.firstName~" "~ app.user.lastName }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{{ path('users_edit', {id:app.user.id}) }}">Modifier mon profil</a>
+            <a class="dropdown-item" href="{{ path("app_logout") }}">Se déconnecter</a>
+        </div>
+    </div>
+</header>

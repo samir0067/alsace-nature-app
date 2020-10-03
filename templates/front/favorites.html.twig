@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mes favoris
+{% endblock %}
+
+{% block body %}
+    <a class="button btn-lg mb-5 offset-5 text-center participateBtn mt-5" href="{{ path('index_map') }}">Retourner à l'accueil</a>
+
+    <div class="container-fluid front_all">
+
+        <div id="liste" class="list">
+            <div class="listContainer">
+                {% if app.user.favorites is empty %}
+                    <div class="col-8">
+                        <h4> Vous n'avez pas encore de favoris , retournez donc faire un tour dans notre liste pour voir si quelque chose vous plaît!</h4>
+                    </div>
+                {% endif %}
+                {% for eventlist in app.user.favorites %}
+                    {% if eventlist.dateStop > "now"|date("m/d/Y") %}
+                    <div class="content eventList">
+
+
+                        <div class="card mb-2" >
+                            <div class="row no-gutters eventCard" >
+                                {% for theme in eventlist.theme %}
+                                <div class="col-md-1 colorListItems
+                   {{ theme.name|replace({'é':'e'})|lower }}" style="max-width: 40px;">
+                                    {% endfor%}
+                                    {% for cat in eventlist.category %}
+                                    <img src="{{ asset('/build/images/icons/'~cat.name|lower~'.png') }}" class=" logoListItems">
+                                </div>
+
+                                {% endfor %}
+                                <div class="col-md-4">
+                                    {% if eventlist.illustration %}
+                                        <img src="{{ vich_uploader_asset(eventlist, 'imageFile') | imagine_filter('thumb') }}" alt="img-event">
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="card-body">
+                                        <div class="eventDate">
+                                            <p>
+                                                {{ eventlist.dateStart|date('d/m/Y') }}
+                                                <span class="picto">
+                                                {% if eventlist.cost > 0 %}
+                                                    <img id="iconEuro" src="{{ asset('build/images/icons/icon_euro.png') }}">
+                                                {% endif %}
+                                                    {% if eventlist.registerRequired == true %}
+                                                        <img id="iconIncri" src="{{ asset('build/images/icons/icon_inscription.png') }}">
+                                                    {% endif %}
+                                                    {% if eventlist.accessibility == 'pmr' and eventlist.accessibility == 'animaux' %}
+                                                        <img id="iconPmr" src="{{ asset('build/images/icons/icon_pmr.png') }}">
+                                                        <img id="iconAnimaux" src="{{ asset('build/images/icons/icon_animaux.png') }}">
+                                                {% elseif eventlist.accessibility == 'pmr' %}
+                                                        <img id="iconPmr" src="{{ asset('build/images/icons/icon_pmr.png') }}">
+                                                {% elseif eventlist.accessibility == 'animaux' %}
+                                                        <img id="iconAnimaux" src="{{ asset('build/images/icons/icon_animaux.png') }}">
+                                                    {% endif %}
+                                            </span></p>
+                                            <button class="btn btn-dark" onclick="ajaxModale({{ eventlist.id }})" data-toggle="modal" data-target=".bd-example-modal-lg">Voir plus</button>
+                                        </div>
+
+                                        <h5 class="card-title eventTitle">{{ eventlist.title }}</h5>
+                                        <p class="card-text">{{ eventlist.description }}</p>
+                                        <div class="eventInfosBottom">
+                                            <div class="firstBottomEvent">
+                                                <p class="card-text alignRow">Structure : <a class="structureEventLink" href="{{ path('structure_show',{'id': eventlist.structure.id}) }}">{{ eventlist.structure.usualName }}</a></p>
+                                                <p class="card-text alignRow" disabled>Places Restantes :
+                                                    {% if eventlist.maxParticipants == false %}
+                                                        Pas de limite
+                                                    {% elseif eventlist.maxParticipants -  eventlist.nbrParticipants  > 0 %}
+                                                        {{ eventlist.maxParticipants - eventlist.nbrParticipants }}
+                                                    {% else %}
+                                                        0
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                            <div class="secondBottomEvent">
+                                                {% if app.user.participation.contains(eventlist)  %}
+                                                    <a href="{{ path("index_removeParticipation", { 'event' : eventlist.id }) }}"> <button class="btn btn-dark"> <img class="iconButton" src="{{ asset('/build/images/icons/participation.png') }}">Annuler</button></a>
+                                                {% else %}
+                                                    <a href="{{ path("index_participate", { 'event' : eventlist.id }) }}"> <button class="btn btn-dark"> <img class="iconButton" src="{{ asset('/build/images/icons/participation.png') }}">Participer</button></a>
+                                                {% endif %}
+                                                <a href="{{ path("index_removeFavorites", { 'event' : eventlist.id }) }}"><button class="btn btn-dark secondButton"><img class="iconButton" src="{{ asset('/build/images/icons/star.png') }}">Retirer des favoris</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalShow" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div id="modalContent" class="modal-dialog modal-lg">
+
+            </div>
+        </div>
+        <div class="front_filter">
+                <ul class="filterAllUl">
+                    {% if app.user %}
+                    <a class="filterA" href="{{ path('index_favorites') }}">
+                        <li>
+                            <div class="filterBtnTop active">
+                                <img class="icons" alt="favoris" src="{{ asset('/build/images/icons/star.png') }}">
+                                Mes favoris
+                                <span class="sr-only">(current)</span>
+                            </div>
+                        </li>
+                    </a>
+                    <a class="filterA" href="{{ path('index_participations') }}">
+                        <li>
+                            <div class="filterBtnTop">
+                                <img class="icons" alt="participation icon" src="{{ asset('/build/images/icons/participation.png') }}">
+                                Mes participations
+                                <span class="sr-only">(current)</span>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                </ul>
+        </div>
+   </div>
+    <a class="button btn-lg mb-5 offset-5 text-center participateBtn" href="{{ path('index_map') }}">Retourner à l'accueil</a>
+
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

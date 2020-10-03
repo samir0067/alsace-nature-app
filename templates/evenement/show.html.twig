@@ -1,0 +1,127 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <h1>Evenement</h1>
+            {% if evenement.report.id is defined %}
+                <a href="{{ path('evenement_report_show', {evenement:evenement.id, id:evenement.report.id}) }}">
+                    <button type="button" class="btn btnCreate ml-3">Bilan</button>
+                </a>
+            {% endif %}
+    </div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Créé par</th>
+                <td>
+                    {% if evenement.creator %}
+                    <a href="{{ path('users_show', {'id': evenement.creator.id}) }}">
+                        {{ evenement.creator.firstname ~ ' ' ~evenement.creator.lastname }}
+                    </a>
+                    {% else %}
+                    Impossible d'afficher la personne qui a créé l'événement.
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ evenement.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ evenement.description }}</td>
+            </tr>
+            <tr>
+                <th>OrganisatorPhoneNum</th>
+                <td>{{ evenement.organisatorPhoneNum }}</td>
+            </tr>
+            <tr>
+                <th>OrganisatorMail</th>
+                <td>{{ evenement.organisatorMail }}</td>
+            </tr>
+            <tr>
+                <th>TypeUsers</th>
+                <td>{{ evenement.typeUsers }}</td>
+            </tr>
+            <tr>
+                <th>TargetAudience</th>
+                <td>{{ evenement.targetAudience }}</td>
+            </tr>
+            <tr>
+                <th>Accessibility</th>
+                <td>{{ evenement.accessibility }}</td>
+            </tr>
+            <tr>
+                <th>MaxParticipants</th>
+                <td>{{ evenement.maxParticipants }}</td>
+            </tr>
+            <tr>
+                <th>NumberSubscribAdult</th>
+                <td>{{ evenement.numberSubscribAdult }}</td>
+            </tr>
+            <tr>
+                <th>RegisterRequired</th>
+                <td>{{ evenement.registerRequired ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Cost</th>
+                <td>{{ evenement.cost }}</td>
+            </tr>
+            <tr>
+                <th>InitialPriceAdult</th>
+                <td>{{ evenement.initialPriceAdult }}</td>
+            </tr>
+            <tr>
+                <th>InitialPriceChild</th>
+                <td>{{ evenement.initialPriceChild }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ evenement.location }}</td>
+            </tr>
+            <tr>
+                <th>DateStart</th>
+                <td>{{ evenement.dateStart ? evenement.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateStop</th>
+                <td>{{ evenement.dateStop ? evenement.dateStop|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EventStatus</th>
+                <td>{{ evenement.eventStatus }}</td>
+            </tr>
+            <tr>
+                <th>Illustration</th>
+                <td>{{ evenement.illustration }}</td>
+            </tr>
+            <tr>
+                <th>imageFile</th>
+                <td>
+                    {% if evenement.illustration %}
+                    <img src="{{ vich_uploader_asset(evenement, 'imageFile') | imagine_filter('thumb') }}" alt="img-event">
+                    {% else %}
+                        <p>aucune image disponible</p>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<div class="row mb-5">
+    <a href="{{ path('evenement_index') }}">
+        <button type="button" class="btn btn-success">Retour</button>
+    </a>
+    <a href="{{ path('evenement_edit', {'id': evenement.id}) }}">
+        <button class="btn btn-warning ml-2">Modifier</button>
+    </a>
+    {{ include('evenement/_delete_form.html.twig') }}
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

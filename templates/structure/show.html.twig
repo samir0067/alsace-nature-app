@@ -1,0 +1,44 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Structure organisatrice{% endblock %}
+
+{% block body %}
+    <h1>Structure organisatrice </h1>
+    <div class="jumbotron">
+        <div class="row">
+            <h2 class="h1-responsive"> {{ structure.completeName }} {{ structure.usualName }}</h2>
+            {% if structure.logoName %}
+                <img src="{{ vich_uploader_asset(structure, 'imageFile') | imagine_filter('thumb') }}" alt="img-structure">
+            {% else %}
+                <p>aucune image disponible</p>
+            {% endif %}
+        </div>
+        <p class="lead">{{ structure.structureType }}</p>
+        <p class="lead">{{ structure.description }}</p>
+        <p class="lead">{{ structure.website }}</p>
+        <hr class="my-2">
+        <p>{{ structure.legalRpFirstName }} {{ structure.legalRpLastName }}</p>
+        <p>{{ structure.legalRepresentMail }} {{ structure.legalRepresentRole }}</p>
+        <p>Email:{{ structure.officeMail }} / Tel:+33{{ structure.officePhone }} </p>
+        <p>{{ structure.territoryOffice }} / Adresse:{{ structure.officeAddress }}</p>
+        <div class="row">
+            <a href="{{ path('structure_index') }}">
+                <button type="button" class="btn btn-success">Retour</button>
+            </a>
+            <a href="{{ path('structure_edit', {id:structure.id}) }}">
+                <button class="btn btn-warning ml-2">Modifier</button>
+            </a>
+            {% if is_granted('ROLE_ORGA') %}
+                <form method="post" action="{{ path('structure_delete', {id: structure.id}) }}"
+                      onsubmit="return confirm('Étes vous vraiment sur ?')">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value={{ csrf_token('delete' ~ structure.id) }}>
+                    <button class="btn btn-danger ml-2">Supprimer</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}

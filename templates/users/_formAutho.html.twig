@@ -1,0 +1,17 @@
+
+{{ form_start(formAutho) }}
+    <div class="row align-items-end bt-3">
+        <div class="col-md-7">
+            <div class="col-md-12">{{ form_row(formAutho.authorization) }}</div>
+        </div>
+    </div>
+    <div class="row align-items-end bt-3">
+        <div class="col-md-4">
+            <div class="col-md-12">{{ form_row(formAutho.structure) }}</div>
+        </div>
+    </div>
+    <p class="messageFormUsers">Votre demande doit être validée par un admin de niveau supérieur.
+    </p>
+    <a href="{{ path('users_index') }}" class="btn btnCancel mr-2 offset-5">Annuler</a>
+    <button class="btn btnCreate ">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(formAutho) }}
